@@ -75,7 +75,6 @@ export default function User() {
          <CategoryUser close={setIsCategory}/>
        ) : (
          <>
-           {" "}
            <div>
              <h1>Funcionários</h1>
              <div>
@@ -84,7 +83,7 @@ export default function User() {
                    setIsCategory(true);
                  }}
                >
-                 + Categoria
+                 Categoria
                </button>
                <button
                  onClick={() => {
