@@ -1,0 +1,52 @@
+#categoryUser{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+}
+#categoryUser > * {
+    padding: 10px;
+}
+
+
+#categoryUser > span{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#categoryUser > span button{
+    background-color: var(--pink);
+    color: var(--white);
+    width: 90px;
+}
+#categoryUser > span div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+#categoryUser > div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#categoryUser > div > button{
+    width: 140px;
+    background-color: var(--pink);
+    color: var(--white);
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#categoryUser > div > button:first-of-type{
+    color: var(--blue);
+    border: solid 1px;
+    background-color: var(--white);
+}

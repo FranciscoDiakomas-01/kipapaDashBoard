@@ -1,0 +1,158 @@
+#user{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    min-height: 100dvh;
+}
+#user  > * {
+    padding: 20px;
+}
+
+#user >  div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#user >  div > div{
+    display: flex;
+    gap: 20px;
+}
+#user >  div > div button:last-of-type{
+    background-color: transparent;
+    color: var(--pink);
+    border: solid 1px;
+}
+#user >  div button{
+    background-color: var(--pink);
+    width: 120px;
+    color: var(--white);
+}
+
+#user > form{
+    width: 100%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    overflow: hidden;
+}
+
+#user > form select{
+    width: 400px;
+}
+#user  > form button{
+    background-color: var(--pink);
+    color: var(--white);
+    width: 60px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#user >  article{
+    width: 100%;
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+}
+
+
+#user >  article figure{
+    background-color: var(--white);
+    padding: 10px;
+    height: 250px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 4px 4px 4px #00000016;
+    border-radius: 6px;
+    transition: all .5s linear;
+    animation: surgir2 1s linear;
+}
+#user >  article figure * {
+    overflow: hidden;
+}
+
+#user >  article figure article{
+    width: 100%;
+    gap: 0px;
+    position: relative;
+    height: 70%;
+}
+
+#user >  article figure article div, #user >  article figure article aside{
+    position: absolute;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    transition: all .5s linear;
+}
+#user >  article figure article div{
+    align-items: center;
+    gap: 10px;
+
+}
+ #user >  article figure article aside{
+    transform: translateX(100%);
+    gap: 10px;
+ }
+
+#user >  article figure article.apaer div{
+    transform: translateX(-100%);
+}
+
+#user >  article figure article.apaer aside{
+    transform: translateX(0%);
+}
+#user >  article figure span{
+    height: 90px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    justify-content: center;
+    color: var(--white);
+}
+
+#user >  article figure button{
+    color: var(--pink);
+    border: solid 1px;
+    background-color: transparent;
+    width: 50%;
+}
+
+
+#user >  article figure div{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+#user > span{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#user > span button{
+    background-color: var(--pink);
+    color: var(--white);
+    width: 90px;
+}
+#user > span div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+

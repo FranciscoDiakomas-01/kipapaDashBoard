@@ -28,13 +28,18 @@ export function App() {
     },
     {
       icon: <FaRegUser />,
-      name: "Entregador",
+      name: "Entregadores",
       path: "/users",
     },
     {
       icon: <FaShoppingCart />,
       name: "Pedidos",
       path: "/orders",
+    },
+    {
+      icon: <FaRegUser />,
+      name: "Clientes",
+      path: "/clients",
     },
   ];
   return (

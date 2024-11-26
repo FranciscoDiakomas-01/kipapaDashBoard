@@ -133,7 +133,7 @@
   cursor: pointer;
   transition: all .5s linear;
 }
-#app button:active{
+#app button:active , #app svg:active{
   scale: 0.8;
 }
 
@@ -142,6 +142,8 @@
   border-radius: 4px;
   transition: all .5s linear;
   outline-color: var(--pink);
+  padding-left: 5px;
+  font-size: 11.5pt;
 }
 ::-webkit-scrollbar{
   width: 10px;
@@ -149,4 +151,68 @@
 ::-webkit-scrollbar-thumb{
   background-color: var(--pink);
   border-radius: 10px;
+}
+
+::selection{
+  color: var(--white);
+  background-color: var(--pink);
+}
+svg{
+  cursor: pointer;
+  transition: all .5s linear;
+}
+
+table{
+    width: 100%;
+    animation: surgir2 1s linear;
+}
+
+table thead{
+    background-color: var(--gray2);
+    color: #2a2828;
+}
+
+table  td{
+    height: 45px;
+    text-align: center;
+}
+
+table tbody tr:nth-of-type(even){
+    background-color: var(--white);
+}
+table  p{
+    height: 28px;
+    background-color: red;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    border-radius: 30px;
+    font-size: 11pt;
+}
+
+table  button{
+    background-color: var(--yellow);
+    width: 45%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 11pt;
+    position: absolute;
+    top: 0;
+}
+
+table  button:last-of-type{
+  right: 0;
+  top: 0;
+  background-color: var(--pink);
+}
+
+table  td:first-of-type , table  td:last-of-type{
+    width: 140px;
+    position: relative;
+    overflow: hidden;
 }

@@ -86,36 +86,3 @@
     font-size: 32pt;
 }
 
-
-#dash > table{
-    width: 100%;
-}
-
-#dash > table thead{
-    background-color: var(--gray2);
-    color: #2a2828;
-}
-
-#dash > table  td{
-    height: 45px;
-    text-align: center;
-}
-
-#dash > table tbody tr:nth-of-type(even){
-    background-color: var(--white);
-}
-#dash > table  p{
-    height: 28px;
-    background-color: red;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--white);
-    border-radius: 30px;
-    font-size: 11pt;
-}
-
-#dash > table  td:first-of-type , #dash > table  td:last-of-type{
-    width: 160px;
-}

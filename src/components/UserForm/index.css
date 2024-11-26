@@ -1,0 +1,99 @@
+#productForm{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    z-index: 99999999999999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#productForm > form{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    align-items: center;
+    box-shadow: 2px 2px 3px #0000003b;
+    justify-content: center;
+}
+#productForm figure > form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#productForm form article{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    gap: 30px 20px;
+}
+#productForm form article div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+#productForm form article div > * {
+    overflow: hidden;
+}
+#productForm form article div input , #productForm form article div select{
+    width: 100%;
+    height: 40px;
+}
+
+#productForm form > div:last-of-type{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+#productForm form > div:last-of-type button{
+    width: 100%;
+    color: var(--white);
+    background-color: var(--pink);
+}
+
+#productForm form > div:last-of-type button:last-of-type{
+    width: 100%;
+    color: var(--white);
+    background-color: var(--blue);
+}
+
+#productForm form  label{
+    color: var(--pink);
+}
+
+
+#productForm form  span{
+    font-size: 22pt;
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 200px;
+    width: 200px;
+    justify-content: center;
+    border: dotted ;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+}
+#productForm form  span input{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}

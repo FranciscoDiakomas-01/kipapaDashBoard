@@ -1,7 +1,20 @@
 import './index.css'
 import { FaSearch } from 'react-icons/fa';
 import logo from '../../assets/pngegg (9).png'
+import Loader from '../../components/Loader';
+import ProductForm from '../../components/ProductForm';
+import ProductDetails from '../../components/ProductDetails';
+import { useState, useEffect } from 'react';
+
 export default function Product() {
+  const [isAdd , setIsAdd] = useState(false)
+  const [isloading, setIsLoading] = useState(true)
+  const [isDetails , setDetails] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1500)
+  },[])
     const demo = [
       {
         name: "Hamburguer",
@@ -102,9 +115,17 @@ export default function Product() {
     ];
  return (
    <section id="product">
+     {isAdd && <ProductForm close={setIsAdd} />}
+     {isDetails && <ProductDetails close={setDetails} />}
      <span>
        <h1>Produtos</h1>
-       <button>+ Add</button>
+       <button
+         onClick={() => {
+           setIsAdd(true);
+         }}
+       >
+         + Add
+       </button>
      </span>
 
      <article>
@@ -118,37 +139,36 @@ export default function Product() {
            </button>
          </form>
          {Array.isArray(demo) && demo?.length > 0 ? (
-           <aside>
-             {demo.map((item, index) => (
-               <figure key={index}>
-                 <img src={item.img_url} />
-                 <strong>{item.name}</strong>
-                 <div>
-                   <p>{Number(item?.current_price).toLocaleString("pt")}kz</p>
-                   <del>
-                     {item.old_price != 0 &&
-                       Number(item?.old_price).toLocaleString("pt") + 'kz'}
-                   </del>
-                 </div>
-                 <figcaption>
-                    {item.description}
-                 </figcaption>
-                 <button>Detalhes</button>
-               </figure>
-             ))}
-           </aside>
+           <>
+             {isloading ? (
+               <Loader />
+             ) : (
+               <aside>
+                 {demo.map((item, index) => (
+                   <figure key={index}>
+                     <img src={item.img_url} />
+                     <strong>{item.name}</strong>
+                     <div>
+                       <p>
+                         {Number(item?.current_price).toLocaleString("pt")}kz
+                       </p>
+                       <del>
+                         {item.old_price != 0 &&
+                           Number(item?.old_price).toLocaleString("pt") + "kz"}
+                       </del>
+                     </div>
+                     <button onClick={() => {
+                       setDetails(true)
+                     }}>Detalhes</button>
+                   </figure>
+                 ))}
+               </aside>
+             )}
+           </>
          ) : (
            <h1>Nenhum Produto Cadastrado</h1>
          )}
        </div>
-
-       <span>
-         <p>1 de 1</p>
-         <div>
-           <button>Prev</button>
-           <button>Next</button>
-         </div>
-       </span>
      </article>
    </section>
  );
