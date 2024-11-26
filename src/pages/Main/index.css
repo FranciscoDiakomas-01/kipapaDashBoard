@@ -1,0 +1,121 @@
+
+#dash{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    overflow: auto;
+}
+#dash > * {
+    padding: 20px;
+}
+#dash > h1{
+    color: var(--pink);
+    font-size: 14pt;
+}
+#dash > article{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px 20px;
+    
+}
+#dash > article aside{
+    height: 200px;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 8px;
+    position: relative;
+    background-color: var(--pink);
+    color: var(--white);
+    text-align: center;
+}
+#dash > article aside:nth-of-type(1), #dash > article aside:nth-of-type(4){
+        animation: surgir 1s linear ;
+}
+
+#dash > article aside:nth-of-type(3), #dash > article aside:nth-of-type(6){
+        animation: surgir2 1s linear ;
+}
+
+#dash > article aside:nth-of-type(2), #dash > article aside:nth-of-type(5){
+        animation: surgir3 1s linear ;
+}
+@keyframes surgir2 {
+    
+    from{
+        opacity: 0;
+        transform: translateX(100dvh);
+    }
+     to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes surgir3 {
+    
+    from{
+        opacity: 0;
+        transform: translateY(100dvh);
+    }
+     to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes surgir {
+    
+    from{
+        opacity: 0;
+        transform: translateX(-100dvh);
+    }
+     to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+#dash > article  > aside * {
+    overflow: hidden;
+}
+#dash > article  h1{
+    font-size: 22pt;
+}
+#dash > article  span{
+    font-size: 32pt;
+}
+
+
+#dash > table{
+    width: 100%;
+}
+
+#dash > table thead{
+    background-color: var(--gray2);
+    color: #2a2828;
+}
+
+#dash > table  td{
+    height: 45px;
+    text-align: center;
+}
+
+#dash > table tbody tr:nth-of-type(even){
+    background-color: var(--white);
+}
+#dash > table  p{
+    height: 28px;
+    background-color: red;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    border-radius: 30px;
+    font-size: 11pt;
+}
+
+#dash > table  td:first-of-type , #dash > table  td:last-of-type{
+    width: 160px;
+}
