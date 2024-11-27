@@ -119,7 +119,7 @@ const latestOrders = [
                        backgroundColor: "var(--blue)",
                      }}
                    >
-                     Á caminho
+                     Á entrega
                    </p>
                  ) : (
                    <p>Cancelado</p>

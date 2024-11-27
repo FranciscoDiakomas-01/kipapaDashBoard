@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './index.css'
 
 export default function CategoryForm({close}) {

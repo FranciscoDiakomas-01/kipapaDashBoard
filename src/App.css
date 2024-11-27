@@ -11,6 +11,7 @@
 :root {
   --green : #048046;
   --pink : #ed0a34;
+  --pink2 :#f6d6dc;
   --white : #ffffff;
   --gray : #f4f4f4;
   --gray2:  #c5c3c3;
@@ -24,6 +25,12 @@
   flex-direction: column;
 }
 
+#app sub{
+  position: absolute;
+  right: 5px;
+  top: 20px;
+  font-size: 12pt;
+}
 #app > header{
   width: 100%;
   position: fixed;

@@ -7,6 +7,9 @@ import Product from './pages/Product/index.jsx';
 import User from './pages/User/index.jsx';
 import Category from './pages/Category/index.jsx';
 import Clients from './pages/Clients/index.jsx';
+import Orders from './pages/Orders/index.jsx';
+import Pay from './pages/Pay/index.jsx';
+import Acount from './pages/Acount/index.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,6 +34,18 @@ const router = createBrowserRouter([
       {
         path: "/clients",
         element: <Clients />,
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        path: "/acount",
+        element: <Acount />,
+      },
+      {
+        path: "/pay",
+        element: <Pay />,
       },
     ],
   },

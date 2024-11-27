@@ -43,6 +43,9 @@
 #dash > article aside:nth-of-type(2), #dash > article aside:nth-of-type(5){
         animation: surgir3 1s linear ;
 }
+#dash * {
+    overflow: hidden;
+}
 @keyframes surgir2 {
     
     from{

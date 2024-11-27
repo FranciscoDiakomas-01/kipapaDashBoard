@@ -1,0 +1,225 @@
+#orders{
+    width: 100%;
+    display: flex;
+    height: 90dvh;
+    overflow: hidden;
+    justify-content: space-between;
+    gap: 10px;
+    position: relative;
+}
+#orders > div{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 99;
+    background-color: transparent;
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#orders > div form{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--white);
+    padding: 20px;
+    height: 70%;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px #0000001d;
+}
+
+#orders > div form  span{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 10px;
+}
+
+#orders > div form  span figure{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--gray);
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 3px 3px 3px #0000001b;
+    overflow: hidden;
+    height: 90px;
+    cursor: pointer;
+    transition: all .5s linear;
+}
+
+#orders > div form  span figure:active{
+    scale: 0.7;
+}
+#orders > div form  span figure p{
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    border-radius: 50%;
+}
+
+#orders > div form  select{
+    width: 60%;
+}
+
+#orders > div form button{
+    width: 60%;
+    background-color: var(--pink);
+    color: var(--white);
+}
+#orders > article{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+#orders > article > div:first-of-type{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#orders > article > div:first-of-type button{
+    width: 100px;
+}
+#orders > article > div:last-of-type{
+    height: 85%;
+    overflow-y: scroll;
+}
+#orders table{
+    overflow: scroll;
+    width: 100%;
+}
+
+#orders > article > span{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#orders > article > span button{
+    width: 80px;
+    background-color: var(--pink);
+    color: var(--white);
+}
+
+#orders > article > span div{
+    display: flex;
+    gap: 20px;
+}
+
+#orders > aside{
+    width: 30%;
+    display: flex;
+    background-color: var(--white);
+    flex-direction: column;
+    height: 100%;
+} 
+
+#orders > aside > * {
+    padding: 10px;
+}
+#orders  h1{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 18pt;
+}
+
+#orders > aside > span:first-of-type{
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+}
+
+#orders > aside > span:first-of-type select{
+    width: 150px;
+}
+#orders > aside >article{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    height: 35%;
+    background-color: var(--gray);
+}
+
+#orders > aside >article * {
+    overflow: hidden;
+}
+#orders > aside >article div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#orders > aside > div{
+    height: 70%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+
+#orders > aside > div figure img{
+    height: 90px;
+    width: 80px;
+    border-radius: 50%;
+}
+#orders > aside > div figure span{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+#orders > aside > div figure * {
+    overflow: hidden;
+}
+#orders > aside > div figure div{
+    display: flex;
+    flex-direction:column ;
+    height: 100%;
+    justify-content: space-between;
+}
+#orders > aside > div figure{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--gray);
+    box-shadow: 3px 3px 3px #00000028;
+    border-radius: 4px;
+    padding: 10px;
+    height: 120px;
+}
+
+#orders > aside >article div:last-of-type{
+    display: flex;
+    gap: 10px;
+}
+#orders > aside >article div  button{
+    background-color: var(--green);
+    color: var(--white);
+    width: 50%;
+}
+
+#orders > aside >article div  button:last-of-type{
+    background-color: var(--yellow);
+}
