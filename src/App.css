@@ -133,18 +133,18 @@
   background-color: var(--gray);
 }
 
-#app button{
+button{
   min-height: 40px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: all .5s linear;
 }
-#app button:active , #app svg:active{
+button:active , #app svg:active{
   scale: 0.8;
 }
 
-#app input , #app select {
+input , select {
   min-height: 40px;
   border-radius: 4px;
   transition: all .5s linear;
@@ -222,4 +222,11 @@ table  td:first-of-type , table  td:last-of-type{
     width: 140px;
     position: relative;
     overflow: hidden;
+}
+label{
+  color: var(--pink);
+}
+
+del{
+  color: var(--pink);
 }

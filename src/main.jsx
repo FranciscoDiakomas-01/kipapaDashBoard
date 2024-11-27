@@ -10,6 +10,7 @@ import Clients from './pages/Clients/index.jsx';
 import Orders from './pages/Orders/index.jsx';
 import Pay from './pages/Pay/index.jsx';
 import Acount from './pages/Acount/index.jsx';
+import Login from './pages/Login/index.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
         element: <Pay />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 createRoot(document.getElementById("root")).render(

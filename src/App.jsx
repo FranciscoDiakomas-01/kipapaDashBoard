@@ -87,7 +87,11 @@ export function App() {
             </Link>
           ))}
         </ol>
-        <button>
+        <button onClick={() => {
+          localStorage.clear()
+          sessionStorage.clear()
+          nav('/login')
+        }}>
           <p>Sair</p>
           <BiLogOut />
         </button>

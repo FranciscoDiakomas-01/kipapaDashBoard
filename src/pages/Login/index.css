@@ -1,0 +1,52 @@
+#login{
+    height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    
+}
+#login img{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+#login > *{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+#login > form > div{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 60%;
+    animation: surgir 1s linear;
+}
+#login > form > div div{
+    display: flex;
+    gap: 3px;
+    color: var(--pink);
+    align-items: center;
+    place-self: center;
+}
+#login >  article{
+    background-image: linear-gradient(#00000024 , rgba(0, 0, 0, 0.479)) , url(../../assets/bugger.jpg);
+    background-size: cover;
+    animation: surgir2 1s linear;
+}
+#login > form button{
+    background-color: var(--pink);
+    color: var(--white);
+    border: none;
+}
+
+#login p{
+    text-align: center;
+    font-size: 12pt;
+    color: var(--pink);
+}
