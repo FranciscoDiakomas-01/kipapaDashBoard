@@ -9,6 +9,8 @@
     box-shadow: 2px 2px 3px #0000003b;
     justify-content: center;
     border-radius: 10px;
+    position: relative;
+    min-height: 40%;
 }
 
 #productForm > figure > div{
@@ -21,4 +23,9 @@
     color: var(--white);
     background-color: var(--pink);
     border: none;
+
+}
+
+#productForm  form{
+    animation: surgir2 1s linear;
 }

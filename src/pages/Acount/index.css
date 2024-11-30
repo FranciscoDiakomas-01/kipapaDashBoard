@@ -10,9 +10,9 @@
 
 #acount form{
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    width: 50%;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 70%;
     transition: all .5s linear;
     animation: surgir2 1s linear;
 }

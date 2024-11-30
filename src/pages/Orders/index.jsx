@@ -1,23 +1,50 @@
+/* eslint-disable no-unused-vars */
 import './inex.css'
-import img from '../../assets/pngegg (9).png'
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import generateColor from './../../services/generateColor';
+import { getAllOrders, getOrderByID, UpdateOrderDelivery, UpdateOrderStatus } from '../../services/Orders';
+import { getClientById } from '../../services/clients'
+import { getAllUsercategory } from '../../services/CategoryUSer'
+import {getAllUserrByCategory} from '../../services/User'
+import { toast } from 'react-toastify';
 export default function Orders() {
   const [tab, setTab] = useState(1)
   const [activeRow, setActiveRow] = useState(0)
-  const [orderUser , setUserOrder]= useState(false)
-  const orders = [
-    {
-      id: 100,
-      date: new Date().toLocaleDateString("pt"),
-      total: Number(200).toLocaleString("pt") + " kz",
-    },
-    {
-      id: 2,
-      date: new Date().toLocaleDateString("pt"),
-      total: Number(4000).toLocaleString("pt") + " kz",
-    },
-  ];
+  const [page , setPage] = useState(1)
+  const [orderUser, setUserOrder] = useState(false)
+  const [Orders, setOrders] = useState([])
+  const [client , setClient] = useState([])
+  const [orderDetails, setOrderDetails] = useState()
+  const [usersCategory , setUserCategory] = useState()
+  const [reload, setReload] = useState(false);
+  const [users , setUsers] = useState([])
+  const [pagination, setPagination] = useState({
+    lastPage: 0,
+    currentPage: 0,
+  });
+  useEffect(() => {
+    async function getAll() {
+      const response2 = await getAllUsercategory()
+      setUserCategory(prev =>response2?.data )
+      const response = await getAllOrders(page, 20 , tab);
+      setOrders(response?.data);
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: response?.page,
+        lastPage: response?.latPage,
+      }));
+    }
+    getAll();
+  }, [page, reload , tab]);
+  async function getOrerPerId(id, clientId) {
+    const response = await getOrderByID(id)
+    const reponse1 = await getClientById(clientId);
+    setClient(reponse1)
+    setOrderDetails(response[0]);
+  }
+    async function getDeliverysByCategoryId(id, clientId) {
+     
+    }
  return (
    <section id="orders">
      <article>
@@ -25,6 +52,7 @@ export default function Orders() {
          <button
            onClick={() => {
              setTab(1);
+             setPage((prev) => 1);
              setActiveRow(() => 0);
            }}
            style={{
@@ -37,6 +65,7 @@ export default function Orders() {
          <button
            onClick={() => {
              setTab(2);
+             setPage((prev) => 1);
              setActiveRow(() => 0);
            }}
            style={{
@@ -46,21 +75,11 @@ export default function Orders() {
          >
            Á entrega
          </button>
-         <button
-           onClick={() => {
-             setTab(3);
-             setActiveRow(() => 0);
-           }}
-           style={{
-             color: tab == 3 ? "var(--pink)" : "",
-             border: tab == 3 ? "solid 1px" : "",
-           }}
-         >
-           Concluído
-         </button>
+
          <button
            onClick={() => {
              setTab(4);
+             setPage((prev) => 1);
              setActiveRow(() => 0);
            }}
            style={{
@@ -70,65 +89,108 @@ export default function Orders() {
          >
            Cancelados
          </button>
+         <button
+           onClick={() => {
+             setTab(3);
+             setPage((prev) => 1);
+             setActiveRow(() => 0);
+           }}
+           style={{
+             color: tab == 3 ? "var(--pink)" : "",
+             border: tab == 3 ? "solid 1px" : "",
+           }}
+         >
+           Concluído
+         </button>
        </div>
        <div>
          <table>
            <thead>
              <tr>
-               <td>Nº</td>
+               <td>Pedido Nº</td>
                <td>Data</td>
-               <td>Total</td>
                <td>Estatus</td>
              </tr>
            </thead>
            <tbody>
-             {orders.map((order) => (
-               <tr
-                 key={order.id}
-                 onClick={() => {
-                   setActiveRow(order.id);
-                 }}
-                 style={{
-                   backgroundColor: activeRow == order.id ? "var(--pink2)" : "",
-                   cursor: "pointer",
-                 }}
-               >
-                 <td>{order.id}</td>
-                 <td>{order.date}</td>
-                 <td>{order.total}</td>
-                 <td>
-                   <p
-                     style={{
-                       backgroundColor:
-                         tab == 1
-                           ? "var(--yellow)"
-                           : tab == 2
-                           ? "var(--blue)"
-                           : tab == 3
-                           ? "var(--green)"
-                           : "",
-                       cursor: "pointer",
-                     }}
-                   >
-                     {tab == 1
-                       ? "Em progresso"
-                       : tab == 2
-                       ? "Á entrega"
-                       : tab == 3
-                       ? "Concluído"
-                       : "Cancelado"}
-                   </p>
-                 </td>
-               </tr>
-             ))}
+             {Orders?.length > 0 &&
+               Orders.map((order) => (
+                 <tr
+                   key={order?.id}
+                   onClick={async () => {
+                     setActiveRow(order?.id);
+                     await getOrerPerId(order?.id, order?.clientid);
+                   }}
+                   style={{
+                     backgroundColor:
+                       activeRow == order?.id ? "var(--pink2)" : "",
+                     cursor: "pointer",
+                   }}
+                 >
+                   <td>#{order?.id}</td>
+                   <td>{order?.created_at}</td>
+                   <td>
+                     <p
+                       style={{
+                         backgroundColor:
+                           tab == 1
+                             ? "var(--yellow)"
+                             : tab == 2
+                             ? "var(--blue)"
+                             : tab == 3
+                             ? "var(--green)"
+                             : "",
+                         cursor: "pointer",
+                       }}
+                     >
+                       {tab == 1
+                         ? "Em progresso"
+                         : tab == 2
+                         ? "Á entrega"
+                         : tab == 3
+                         ? "Concluído"
+                         : "Cancelado"}
+                     </p>
+                   </td>
+                 </tr>
+               ))}
            </tbody>
          </table>
        </div>
        <span>
-         <p>x de y</p>
+         <p>
+           {pagination.currentPage} de
+           {pagination.lastPage == 0
+             ? pagination.lastPage + 1
+             : pagination.lastPage}
+         </p>
          <div>
-           <button>Next</button>
-           <button>Prev</button>
+           <button
+             onClick={() => {
+               if (page <= 1) {
+                 return;
+               } else {
+                 setPage((prev) => prev - 1);
+                 setReload((prev) => !prev);
+                 return;
+               }
+             }}
+           >
+             Prev
+           </button>
+           <button
+             onClick={() => {
+               if (pagination?.lastPage == page || pagination?.lastPage == 0) {
+                 return;
+               } else {
+                 setPage((prev) => prev + 1);
+                 setReload((prev) => !prev);
+                 return;
+               }
+             }}
+           >
+             Next
+           </button>
          </div>
        </span>
      </article>
@@ -136,101 +198,126 @@ export default function Orders() {
        {activeRow != 0 && (
          <>
            <span>
-             <h1>Pedido Nº #04333 </h1>
-             <select>
-               <option>Estado</option>
-               <option>Em progresso</option>
-               <option>Á entrega</option>
-               <option>Cancelar</option>
-             </select>
+             <h1>Pedido Nº # {orderDetails?.id} </h1>
+             {orderDetails?.status != 3 && (
+               <>
+                 {" "}
+                 <select
+                   onChange={async (e) => {
+                     //update order status
+                     if (e.target.value == 0) {
+                       return;
+                     }
+                     const response = await UpdateOrderStatus(
+                       orderDetails?.id,
+                       e.target.value
+                     );
+                     if (response) {
+                       toast.success("Alterado com Sucesso!");
+                       return setReload((prev) => !prev);
+                     } else {
+                       toast.error("Erro ao Alterar!");
+                       return;
+                     }
+                   }}
+                 >
+                   <option value={0}>Estado</option>
+                   <option value={1}>Em progresso</option>
+                   <option value={2}>Á entrega</option>
+                   <option value={4}>Cancelar</option>
+                 </select>
+               </>
+             )}
            </span>
            <div>
-             <figure>
-               <span>
-                 <img src={img} />
-                 <p>Pizza</p>
-               </span>
-               <div>
-                 <p>Quantidade : 2</p>
-                 <p>Preço : {Number(2000).toLocaleString("pt")}kz </p>
-                 <p>Total : {Number(2000 * 2).toLocaleString("pt")}kz </p>
-               </div>
-             </figure>
-             <figure>
-               <span>
-                 <img src={img} />
-                 <p>Pizza</p>
-               </span>
-               <div>
-                 <p>Quantidade : 2</p>
-                 <p>Preço : {Number(2000).toLocaleString("pt")}kz </p>
-                 <p>Total : {Number(2000 * 2).toLocaleString("pt")}kz </p>
-               </div>
-             </figure>
-             <figure>
-               <span>
-                 <img src={img} />
-                 <p>Pizza</p>
-               </span>
-               <div>
-                 <p>Quantidade : 2</p>
-                 <p>Preço : {Number(2000).toLocaleString("pt")}kz </p>
-                 <p>Total : {Number(2000 * 2).toLocaleString("pt")}kz </p>
-               </div>
-             </figure>
-             <figure>
-               <span>
-                 <img src={img} />
-                 <p>Pizza</p>
-               </span>
-               <div>
-                 <p>Quantidade : 2</p>
-                 <p>Preço : {Number(2000).toLocaleString("pt")}kz </p>
-                 <p>Total : {Number(2000 * 2).toLocaleString("pt")}kz </p>
-               </div>
-             </figure>
-             <figure>
-               <span>
-                 <img src={img} />
-                 <p>Pizza</p>
-               </span>
-               <div>
-                 <p>Quantidade : 2</p>
-                 <p>Preço : {Number(2000).toLocaleString("pt")}kz </p>
-                 <p>Total : {Number(2000 * 2).toLocaleString("pt")}kz </p>
-               </div>
-             </figure>
+             {orderDetails &&
+               orderDetails?.orders_food?.length > 0 &&
+               orderDetails?.orders_food?.map((food) => (
+                 <figure key={food?.name}>
+                   <span>
+                     <img src={food?.img} />
+                     <p>{food?.name}</p>
+                   </span>
+                   <div>
+                     <p>Quantidade : {food?.qtd} </p>
+                     <p>Preço : {Number(food?.price).toLocaleString("pt")}kz</p>
+                     <p>
+                       Total :
+                       {Number(food?.price * food?.qtd).toLocaleString("pt")}kz
+                     </p>
+                   </div>
+                 </figure>
+               ))}
            </div>
            <article>
              <div>
                <p>Cliente : </p>
-               <i>Francisco Diakomas</i>
+               <i>{client?.fullname}</i>
              </div>
+
              <div>
                <p>Email :</p>
-               <i>fr@gmail.com</i>
+               <i>{client?.email}</i>
              </div>
+
              <div>
                <p>Endereço : </p>
-               <i>Cacuaco/xxx/0912345</i>
+               <i>
+                 {orderDetails?.adress.city +
+                   "/" +
+                   orderDetails?.adress.qoute +
+                   "/" +
+                   orderDetails?.adress.cep}
+               </i>
              </div>
              <div>
                <p>Total à Pagar : </p>
-               <i>10000</i>
+               <i>
+                 {Number(orderDetails?.order_detais?.total_Pay).toLocaleString(
+                   "pt"
+                 )}
+                 kz
+               </i>
              </div>
+
              <div>
                <p>Forma de Pagamento : </p>
-               <i> Pix </i>
+               <i> {orderDetails?.order_detais?.payForm} </i>
              </div>
              <div>
-               <button>Finalizar Pedido</button>
-               <button
-                 onClick={() => {
-                   setUserOrder(() => true);
-                 }}
-               >
-                 Adicionar Entregador
-               </button>
+               {orderDetails?.status != 3 && (
+                 <div>
+                   {orderDetails?.status == 1 && (
+                     <button
+                       onClick={() => {
+                         setUserOrder(() => true);
+                       }}
+                     >
+                       Adicionar Entregador
+                     </button>
+                   )}
+
+                   {orderDetails?.status != 1 && (
+                     <button
+                       onClick={async () => {
+                         const response = await UpdateOrderStatus(
+                           orderDetails?.id,
+                           3
+                         );
+                         if (response) {
+                           toast.success("Alterado com Sucesso!");
+                           return setReload((prev) => !prev);
+                         } else {
+                           toast.error("Erro ao Alterar!");
+                           return;
+                         }
+                       }}
+                     >
+                       Finalizar Pedido
+                     </button>
+                   )}
+                 </div>
+               )}
              </div>
            </article>
          </>
@@ -239,131 +326,61 @@ export default function Orders() {
      {orderUser && (
        <div>
          <form>
-           <select>
-             <option>Selecione a categoria</option>
+           <select
+             onChange={async (e) => {
+               if (e.target.value == 0) {
+                 return;
+               }
+               const response = await getAllUserrByCategory(e.target.value);
+               setUsers(response?.data);
+             }}
+           >
+             <option value={0}>Selecione a categoria</option>
+             {Array.isArray(usersCategory) &&
+               usersCategory?.map((c) => (
+                 <option key={c?.id} value={c?.id}>
+                   {c?.title}
+                 </option>
+               ))}
            </select>
+
            <span>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
-             <figure>
-               <p
-                 style={{
-                   backgroundColor: generateColor(),
-                 }}
-               >
-                 FDK
-               </p>
-               <strong>Francisco Diakomas</strong>
-               <i>francisco@gmail.com.br</i>
-             </figure>
+             {Array.isArray(users) &&
+               users?.length > 0 &&
+               users.map((user) => (
+                 <figure
+                   key={user.id}
+                   onClick={async () => {
+                     //adicionar um entregador
+                     const response = await UpdateOrderDelivery(
+                       orderDetails?.id,
+                       user?.id
+                     );
+                     setReload((prev) => !prev);
+                     if (response) {
+                       //trocar o estado para entrega
+                       await UpdateOrderStatus(orderDetails?.id, 2);
+                       toast.success("Entregador adicionado");
+                       return setTimeout(() => {
+                         setUserOrder((prev) => false);
+                       }, 1500);
+                     } else {
+                       toast.error("Erro ao adicionar");
+                       return;
+                     }
+                   }}
+                 >
+                   <p
+                     style={{
+                       backgroundColor: generateColor(),
+                     }}
+                   >
+                     {user.name?.at(0)}
+                   </p>
+                   <strong>{user.name}</strong>
+                   <i>{user.email}</i>
+                 </figure>
+               ))}
            </span>
            <button
              onClick={() => {

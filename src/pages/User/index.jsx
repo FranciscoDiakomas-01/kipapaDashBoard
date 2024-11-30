@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import './index.css'
 import generateColor from '../../services/generateColor';
 import Loader from '../../components/Loader';
@@ -5,74 +6,59 @@ import { useState, useEffect } from "react";
 import UserForm from '../../components/UserForm';
 import { FaSearch } from 'react-icons/fa';
 import CategoryUser from "../../components/CategoryUser";
+import { getAllUsers, getAllUserrByCategory, deleteUserById} from '../../services/User';
+import { getAllUsercategory } from '../../services/CategoryUSer';
+import { toast } from 'react-toastify';
 export default function User() {
-    const demo = [
-      {
-        id: 1,
-        name: "Francisco F",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-        salary : 120000
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-    ];
-    
   const [isloading, setIsLoading] = useState(true);
   const [isAdding, setisAdding] = useState(false);
+  const [users, setUsers] = useState([1])
+  const [page, setPage] = useState(1)
+  const [reload, setReload] = useState(false);
+  const [category, setCategory] = useState([]);
+  const [filter, setFilter] = useState("all");
+  const [pagination, setPagination] = useState({
+    lastPage: 0,
+    currentPage: 0,
+  });
   const [isCategory, setIsCategory] = useState(false);
   useEffect(() => {
+
+    async function get() {
+      const response1 = await getAllUsercategory();
+      setCategory(response1?.data);
+      if (filter == "all") {
+        const response = await getAllUsers(page, 10);
+        setUsers(response?.data);
+        setPagination((prev) => ({
+          ...prev,
+          currentPage: response?.page,
+          lastPage: response?.laspage,
+        }));
+        return;
+      } else {
+        const response = await getAllUserrByCategory(page, 10, filter);
+        setUsers((prev) => response?.data);
+        setPagination((prev) => ({
+          ...prev,
+          currentPage: response?.page,
+          lastPage: response?.laspage,
+        }));
+        return
+      }
+    }
+    get()
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
-  }, []);
+  }, [page , reload , filter]);
  return (
    <section id="user">
-     {isAdding && <UserForm close={setisAdding} />}
+     {isAdding && <UserForm close={setisAdding} category={category} reload={setReload}  />}
 
      <>
        {isCategory ? (
-         <CategoryUser close={setIsCategory}/>
+         <CategoryUser close={setIsCategory} reloadOnReturn={setReload}/>
        ) : (
          <>
            <div>
@@ -95,14 +81,25 @@ export default function User() {
              </div>
            </div>
            <form>
-             <select>
-               <option>Filtar por categoria</option>
+             <select
+               onChange={(e) => {
+                 setFilter((prev) => e.target.value);
+               }}
+             >
+               <option value={"all"}>Filtar por categoria</option>
+               <option value={"all"}>Todas categorias</option>
+               {Array.isArray(category) &&
+                 category?.map((c) => (
+                   <option key={c?.id} value={c?.id}>
+                     {c?.title}
+                   </option>
+                 ))}
              </select>
              <button>
                <FaSearch />
              </button>
            </form>
-           {Array.isArray(demo) && demo?.length > 0 ? (
+           {Array.isArray(users) && users?.length > 0 ? (
              <>
                {isloading ? (
                  <div>
@@ -111,7 +108,7 @@ export default function User() {
                ) : (
                  <>
                    <article>
-                     {demo.map((item, index) => (
+                     {users.map((item, index) => (
                        <figure
                          key={index}
                          id="fig"
@@ -134,19 +131,22 @@ export default function User() {
                                  backgroundColor: generateColor(),
                                }}
                              >
-                               {item.name.at(0) + item.lastName.at(0)}
+                               {item?.name?.at(0) + item?.lastname?.at(0)}
                              </span>
-                             <strong>{item.name + " " + item.lastName}</strong>
+                             <strong>
+                               {item?.name + " " + item?.lastname}
+                             </strong>
                              <i>{item.email}</i>
                            </div>
                            <aside>
                              <strong>
-                               Salário : {Number(20000).toLocaleString("pt")}kz{" "}
+                               Salário :{" "}
+                               {Number(item?.salary).toLocaleString("pt")}kz{" "}
                              </strong>
-                             <strong>Categoria : Entregador</strong>
-                             <strong>Município : Kilamba Kiaxi </strong>
-                             <strong>Bairro : Bairro </strong>
-                             <strong>Cep : 102935679087</strong>
+                             <strong>Categoria : {item?.category} </strong>
+                             <strong>Município : {item?.adress?.city} </strong>
+                             <strong>Bairro : {item?.adress?.qoute} </strong>
+                             <strong>Cep : {item?.adress?.cep} </strong>
                            </aside>
                          </article>
                          <div className="div">
@@ -170,23 +170,65 @@ export default function User() {
                            >
                              Mais detalhes
                            </button>
-                           <button>Eliminar</button>
+                           <button onClick={async () => {
+                             await deleteUserById(item?.id)
+                             setReload(prev => !prev)
+                             toast.success("Deletado com sucesso!")
+                             return
+                           }}>Eliminar</button>
                          </div>
                        </figure>
                      ))}
                    </article>
                    <span>
-                     <p>x de y</p>
+                     <p>
+                       {pagination.currentPage} de{" "}
+                       {pagination.lastPage == 0
+                         ? pagination.lastPage + 1
+                         : pagination.lastPage}
+                     </p>
                      <div>
-                       <button>Prev</button>
-                       <button>Next</button>
+                       <button
+                         onClick={() => {
+                           if (page <= 1) {
+                             return;
+                           } else {
+                             setPage((prev) => prev - 1);
+                             setReload((prev) => !prev);
+                             return;
+                           }
+                         }}
+                       >
+                         Prev
+                       </button>
+                       <button
+                         onClick={() => {
+                           if (
+                             pagination?.lastPage == page ||
+                             pagination?.lastPage == 0
+                           ) {
+                             return;
+                           } else {
+                             setPage((prev) => prev + 1);
+                             setReload((prev) => !prev);
+                             return;
+                           }
+                         }}
+                       >
+                         Next
+                       </button>
                      </div>
                    </span>
                  </>
                )}
              </>
            ) : (
-             <h1>Nehum Entragador cadatrado</h1>
+                 <h1 style={{
+                   textAlign: 'center',
+                   color: 'var(--pink)',
+                   fontSize: '22pt',
+                   marginTop : '100px'
+             }}>Nehum Funcionário cadatrado</h1>
            )}
          </>
        )}

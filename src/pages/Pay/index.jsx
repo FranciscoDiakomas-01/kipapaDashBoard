@@ -1,33 +1,27 @@
+/* eslint-disable no-unused-vars */
 import Loader from "../../components/Loader";
+import { getAllPayForm , deletePayForm , createPayForm, getPayFormById, updatePayForm} from "../../services/pay";
 import { useState, useEffect } from "react";
 import './index.css'
+import { toast } from "react-toastify";
 export default function Pay() {
-  const demo = [
-    {
-      id: 1,
-      name: "PayPal",
-    },
-    {
-      id: 1,
-      name: "Cartão de Crédito",
-    },
-    {
-      id: 1,
-      name: "Cartão de Débito",
-    },
-    {
-      id: 1,
-      name: "Pix",
-    },
-  ];
+
+  const [title, setTile] = useState("");
+  const [reload, setReload] = useState(false);
+  const[pay,setPay] = useState([1])
   const [isloading, setIsLoading] = useState(true);
   const [add , setAdd] = useState(false)
   const [update, setUpdate] = useState(false);
   useEffect(() => {
+    async function get() {
+    const response = await getAllPayForm();
+    setPay((prev) => response?.data);
+  }
+  get();
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
-  }, []);
+  }, [reload]);
   return (
     <section id="user" className="pay">
       <div>
@@ -42,19 +36,49 @@ export default function Pay() {
       </div>
       {add && (
         <aside>
-          <form>
+          <form
+            onReset={(e) => {
+              e.preventDefault();
+              setTile((prev) => "");
+            }}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (title?.length < 2) {
+                return toast.warn("Deve conter mais que 2 caracteres");
+              } else {
+                const pay = {
+                  title: title,
+                };
+                const response = await createPayForm(pay);
+                if (response) {
+                  setReload((prev) => !prev);
+                  setTile(() => {
+                    setAdd(false);
+                  }, 1500);
+                  return toast.success("Criado com sucesso");
+                } else {
+                  return toast.warn("Deve conter mais que 2 caracteres");
+                }
+              }
+            }}
+          >
             <h1>Cadastro de Forma de Pagamento</h1>
             <label>Título</label>
-            <input placeholder="Entre com o nome" />
+            <input
+              placeholder="Entre com o nome"
+              onChange={(e) => {
+                setTile(e.target.value);
+              }}
+            />
             <div>
               <button>Cadatrar</button>
               <button
-                type="button"
+                type="reset"
                 onClick={() => {
                   setAdd(() => false);
                 }}
               >
-                Fechar
+                Cancelar
               </button>
             </div>
           </form>
@@ -62,10 +86,41 @@ export default function Pay() {
       )}
       {update && (
         <aside>
-          <form>
+          <form
+            onReset={(e) => {
+              e.preventDefault();
+              setTile((prev) => "");
+            }}
+            onSubmit={async (e) => {
+              e.preventDefault();
+              if (title?.length < 2) {
+                return toast.warn("Deve conter mais que 2 caracteres");
+              } else {
+                const pay = {
+                  title: title,
+                };
+                const response = await updatePayForm(pay, sessionStorage.getItem("pid"));
+                if (response) {
+                  setReload((prev) => !prev);
+                  setTile(() => {
+                    setUpdate(false);
+                  }, 1500);
+                  return toast.success("Actualizado com sucesso");
+                } else {
+                  return toast.warn("Deve conter mais que 2 caracteres");
+                }
+              }
+            }}
+          >
             <h1>Atualização da Forma de Pagamento</h1>
             <label>Título</label>
-            <input placeholder="Entre com o nome" />
+            <input
+              placeholder="Entre com o nome"
+              onChange={(e) => {
+                setTile(e.target.value);
+              }}
+              value={title}
+            />
             <div>
               <button>Cadatrar</button>
               <button
@@ -80,7 +135,7 @@ export default function Pay() {
           </form>
         </aside>
       )}
-      {Array.isArray(demo) && demo?.length > 0 ? (
+      {Array.isArray(pay) && pay?.length > 0 ? (
         <>
           {isloading ? (
             <div>
@@ -98,28 +153,36 @@ export default function Pay() {
                 </thead>
 
                 <tbody>
-                  {demo.map((item, index) => (
+                  {pay.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.id}</td>
+                      <td>{item?.id}</td>
 
-                      <td>{item.name}</td>
+                      <td>{item?.title}</td>
                       <td>
-                        <button onClick={()=>{
-                            setUpdate(()=>true)
-                        }} >Editar</button>
-                        <button>Eliminar</button>
+                        <button
+                          onClick={async () => {
+                            const response = await getPayFormById(item?.id);
+                            sessionStorage.setItem("pid", item?.id)
+                            setTile(response?.title);
+                            setUpdate(() => true);
+                          }}
+                        >
+                          Editar
+                        </button>
+                        <button
+                          onClick={async () => {
+                            await deletePayForm(item?.id);
+                            toast.success("Deletado com sucesso!");
+                            setReload((prev) => !prev);
+                          }}
+                        >
+                          Eliminar
+                        </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <span>
-                <p>x de y</p>
-                <div>
-                  <button>Prev</button>
-                  <button>Next</button>
-                </div>
-              </span>
             </>
           )}
         </>

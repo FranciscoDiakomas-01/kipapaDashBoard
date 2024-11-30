@@ -7,6 +7,7 @@ import { BsGrid } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
 import { FaBowlFood } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 export function App() {
   const nav = useNavigate()
   const [active , setAcrtive] = React.useState(0)
@@ -28,7 +29,7 @@ export function App() {
     },
     {
       icon: <FaRegUser />,
-      name: "Entregadores",
+      name: "Funcionários",
       path: "/users",
     },
     {
@@ -44,6 +45,7 @@ export function App() {
   ];
   return (
     <main id="app">
+      <ToastContainer></ToastContainer>
       <header>
         <div>
           <img src={logo} loading="lazy" />

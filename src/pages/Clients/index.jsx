@@ -1,69 +1,37 @@
+import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
+import { getAllClient , deleteClientById } from '../../services/clients';
 import { useState, useEffect } from "react";
 export default function Clients() {
-    const demo = [
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-        salary : 120000
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-      {
-        id: 1,
-        name: "Francisco",
-        lastName: "Diakomas",
-        email: "fran@gmail.com",
-      },
-    ];
+
   const [isloading, setIsLoading] = useState(true);
+  const [client, setClient] = useState([1])
+  const [page, setPage] = useState(1)
+  const [reload, setReload] = useState(false);
+  const [pagination, setPagination] = useState({
+    lastPage: 0,
+    currentPage: 0,
+  });
   useEffect(() => {
+    async function get() {
+      const response = await getAllClient(page, 10);
+      setClient(response?.data);
+        setPagination((prev) => ({
+          ...prev,
+          currentPage: response?.page,
+          lastPage: response?.laspage,
+        }));
+    }
+    get()
     setTimeout(() => {
       setIsLoading(false);
     }, 1500);
-  }, []);
+  }, [page , reload]);
  return (
    <section id="user">
      <div>
        <h1>Clientes</h1>
      </div>
-     {Array.isArray(demo) && demo?.length > 0 ? (
        <>
          {isloading ? (
            <div>
@@ -71,35 +39,75 @@ export default function Clients() {
            </div>
          ) : (
            <>
-             <article>
-               {demo.map((item, index) => (
-                 <figure key={index}>
-                   <span
-                     style={{
-                       backgroundColor: "var(--pink)",
-                     }}
-                   >
-                     {item.name.at(0) + item.lastName.at(0)}
-                   </span>
-                   <strong>{item.name + " " + item.lastName}</strong>
-                   <i>{item.email}</i>
-                     <button>Eliminar</button>
-                 </figure>
-               ))}
-             </article>
-             <span>
-               <p>x de y</p>
-               <div>
-                 <button>Prev</button>
-                 <button>Next</button>
-               </div>
-             </span>
+             {Array.isArray(client) && client?.length > 0 ? (
+               <>
+                 <article>
+                   {client?.map((item, index) => (
+                     <figure key={index}>
+                       <span
+                         style={{
+                           backgroundColor: "var(--pink)",
+                         }}
+                       >
+                         {item?.name?.at(0) + item?.lastname?.at(0)}
+                       </span>
+                       <strong>{item?.name + " " + item?.lastname}</strong>
+                       <i>{item.email}</i>
+                       <button onClick={async() => {
+                         await deleteClientById(item?.id)
+                         toast.success("Deletado com sucesso!")
+                         setReload(prev => !prev)
+                       }}>Eliminar</button>
+                     </figure>
+                   ))}
+                 </article>
+               </>
+             ) : (
+               <h1
+                 style={{
+                   color: "var(--pink)",
+                   fontSize: "22pt",
+                   textAlign: "center",
+                   marginTop: "100px1q",
+                 }}
+               >
+                 Nenhum cliente Cadastrado
+               </h1>
+             )}
            </>
          )}
        </>
-     ) : (
-       <h1>Nehum Cliente cadatrado</h1>
-     )}
+     <span>
+       <p>
+         {pagination.currentPage} de {pagination.lastPage}
+       </p>
+       <div>
+         <button
+           onClick={() => {
+             if (page <= 1) {
+               return;
+             } else {
+               setPage((prev) => prev - 1);
+               return;
+             }
+           }}
+         >
+           Prev
+         </button>
+         <button
+           onClick={() => {
+             if (pagination?.lastPage == page || pagination?.lastPage == 0) {
+               return;
+             } else {
+               setPage((prev) => prev + 1);
+               return;
+             }
+           }}
+         >
+           Next
+         </button>
+       </div>
+     </span>
    </section>
  );
 }

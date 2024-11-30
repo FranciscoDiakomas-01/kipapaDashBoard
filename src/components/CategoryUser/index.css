@@ -11,6 +11,16 @@
     padding: 10px;
 }
 
+#categoryUser > div > article{
+    direction: flex;
+    position: absolute;
+    place-self: center;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+}
 #categoryUser > article{
     position: absolute;
     height: 100%;
