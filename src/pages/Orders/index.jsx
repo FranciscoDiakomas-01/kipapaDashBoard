@@ -235,7 +235,7 @@ export default function Orders() {
                orderDetails?.orders_food?.map((food) => (
                  <figure key={food?.name}>
                    <span>
-                     <img src={food?.img} />
+                     <img src={food?.image_url} />
                      <p>{food?.name}</p>
                    </span>
                    <div>
@@ -252,7 +252,7 @@ export default function Orders() {
            <article>
              <div>
                <p>Cliente : </p>
-               <i>{client?.fullname}</i>
+               <i>{client?.name + " " + client?.lastname}</i>
              </div>
 
              <div>
@@ -263,15 +263,17 @@ export default function Orders() {
              <div>
                <p>Endereço : </p>
                <i>
-                 {orderDetails?.adress.city +
-                   "/" +
-                   orderDetails?.adress.qoute +
-                   "/" +
-                   orderDetails?.adress.cep}
+                 {String(
+                   orderDetails?.adress.city +
+                     " / " +
+                     orderDetails?.adress.qoute +
+                     " / " +
+                     orderDetails?.adress.cep
+                 ).toLocaleLowerCase()}
                </i>
              </div>
              <div>
-               <p>Total à Pagar : </p>
+               <p>Orçamento : </p>
                <i>
                  {Number(orderDetails?.order_detais?.total_Pay).toLocaleString(
                    "pt"
@@ -279,15 +281,23 @@ export default function Orders() {
                  kz
                </i>
              </div>
+             <div>
+               <p>Produtos : </p>
+               <i>{Number(orderDetails?.order_detais?.totalPoduct)}</i>
+             </div>
 
              <div>
                <p>Forma de Pagamento : </p>
-               <i> {orderDetails?.order_detais?.payForm} </i>
+               <i>
+                 {" "}
+                 {String(
+                   orderDetails?.order_detais?.payForm
+                 ).toLocaleLowerCase()}{" "}
+               </i>
              </div>
              <div>
                {orderDetails?.status != 3 && (
                  <div>
-                   {orderDetails?.status == 1 && (
                      <button
                        onClick={() => {
                          setUserOrder(() => true);
@@ -295,9 +305,7 @@ export default function Orders() {
                      >
                        Adicionar Entregador
                      </button>
-                   )}
 
-                   {orderDetails?.status != 1 && (
                      <button
                        onClick={async () => {
                          const response = await UpdateOrderStatus(
@@ -315,7 +323,6 @@ export default function Orders() {
                      >
                        Finalizar Pedido
                      </button>
-                   )}
                  </div>
                )}
              </div>

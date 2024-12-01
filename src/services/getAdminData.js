@@ -18,7 +18,25 @@ export async function getAdminData() {
   }
 }
 
-
+export async function getDashBoard() {
+  const token = localStorage.getItem("token");
+  try {
+    const API = await fetch(`http://localhost:8080/dashBoard`, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token,
+      },
+    });
+    const response = await API.json();
+    if (response?.data?.length > 0) {
+      return response;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return error;
+  }
+}
 
 export async function updateAdmin(admin) {
   const token = localStorage.getItem("token");

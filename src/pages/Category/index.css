@@ -145,3 +145,17 @@
     height: 100%;
     color: #444;
 }
+
+
+@media screen and (max-width : 1024px) and (min-width : 719px){
+#category >  article  div aside {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px 30px;
+    overflow: scroll;
+    padding: 10px ;
+    height: 100%;
+    overflow-x:hidden ;
+}
+}

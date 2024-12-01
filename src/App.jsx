@@ -1,7 +1,7 @@
 import "./App.css";
 import { Outlet , Link } from "react-router-dom";
 import logo from './assets/321097281_1948082938901845_9073110493333833804_n.jpg'
-import { FaRegUser, FaRegBell, FaHamburger, FaShoppingCart, FaCoins} from 'react-icons/fa'
+import { FaRegUser, FaHamburger, FaShoppingCart, FaCoins} from 'react-icons/fa'
 import React from "react";
 import { BsGrid } from "react-icons/bs";
 import { BiLogOut } from "react-icons/bi";
@@ -62,12 +62,6 @@ export function App() {
               nav("/acount");
             }}
           />
-          <FaRegBell
-            onClick={() => {
-              nav("/orders");
-            }}
-          />
-          <sub>106</sub>
         </span>
       </header>
       <nav>

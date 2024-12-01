@@ -1,134 +1,108 @@
 import './index.css';
+import { getDashBoard } from '../../services/getAdminData';
+import { getLatestOrders} from '../../services/Orders'
+import { useState , useEffect } from 'react';
 export default function Main() {
+  
+  const [DashBoard, setDashBoard] = useState([]);
+  const [orders , setOrders] = useState([])
+  useEffect(() => {
+    
+    async function get() {
+      const response = await getDashBoard()
+      const response1 = await getLatestOrders();
+      console.log(response1)
+      setDashBoard(response?.data)
+      setOrders(response1)
+    }
+    get()
 
-const dashboard = [
-      {
-        name: "Produtos",
-        value: 100,
-      },
-      {
-        name: "Categorias",
-        value: 100,
-      },
-      {
-        name: "Pedidos",
-        value: 100,
-      },
-      {
-        name: "Clientes",
-        value: 100,
-      },
-      {
-        name: "Entregadores",
-        value: 100,
-      },
-      {
-        name: "Orçamento",
-        value: 1000,
-      },
-];
-const latestOrders = [
-  {
-    id: 10,
-    totalPay: 4000,
-    product: 1,
-    status: 2,
-  },
-  {
-    id: 10,
-    totalPay: 4000,
-    product: 1,
-    status: 1,
-  },
-  {
-    id: 10,
-    totalPay: 4000,
-    product: 1,
-    status: 1,
-  },
-  {
-    id: 10,
-    totalPay: 4000,
-    product: 1,
-    status: 2,
-  },
-  {
-    id: 10,
-    totalPay: 4000,
-    product: 1,
-    status: 3,
-  },
-  {
-    id: 10,
-    totalPay: 4000,
-    product: 1,
-    status: 4,
-  }
-];
+  },[])
  return (
    <section id="dash">
      <article>
-       {dashboard.map((item, index) => (
-         <aside key={index}>
-           <h1>{item.name}</h1>
-           <span>
-             {index == dashboard.length - 1
-               ? Number(item.value).toLocaleString("pt") + "kz"
-               : item.value}
-           </span>
-         </aside>
-       ))}
+       {Array.isArray(DashBoard) &&
+         DashBoard.length > 0 &&
+         DashBoard.map((item, index) => (
+           <aside key={index}>
+             <h1>
+               {index == 0
+                 ? "Total Produtos"
+                 : index == 1
+                 ? "Categoria Produtos"
+                 : index == 2
+                 ? "Total Pedidos"
+                 : index == 3
+                 ? "Total Funcionários"
+                 : index == 4
+                 ? "Total Clientes"
+                 : "Categoria Funcionários"}
+             </h1>
+             <span>{item?.total}</span>
+           </aside>
+         ))}
      </article>
-     <h1>Últimos Pedidos</h1>
-     {Array.isArray(latestOrders) && latestOrders?.length > 0 && (
-       <table>
-         <thead>
-           <tr>
-             <td>Pedido Nº</td>
-             <td>Valor Pago</td>
-             <td>Produtos</td>
-             <td>Estaus</td>
-           </tr>
-         </thead>
-         <tbody>
-           {latestOrders.map((item, index) => (
-             <tr key={index}>
-               <td>{item.id}</td>
-               <td>{Number(item.totalPay).toLocaleString("pt")}kz</td>
-               <td>{item.product}</td>
-               <td>
-                 {item.status == 1 ? (
-                   <p
-                     style={{
-                       backgroundColor: "var(--green)",
-                     }}
-                   >
-                     Concluído
-                   </p>
-                 ) : item.status == 2 ? (
-                   <p
-                     style={{
-                       backgroundColor: "var(--yellow)",
-                     }}
-                   >
-                     Em Progresso
-                   </p>
-                 ) : item.status == 3 ? (
-                   <p
-                     style={{
-                       backgroundColor: "var(--blue)",
-                     }}
-                   >
-                     Á entrega
-                   </p>
-                 ) : (
-                   <p>Cancelado</p>
-                 )}
-               </td>
+     {Array.isArray(orders) && orders?.length > 0 && (
+       <>
+         <h1>Últimos Pedidos</h1>
+         <table>
+           <thead>
+             <tr>
+               <td>Pedido Nº</td>
+               <td>Data</td>
+               <td>F. Pagamento</td>
+               <td>Valor Pago</td>
+               <td>Total Produtos</td>
+               <td>Estaus</td>
              </tr>
-           ))}
-         </tbody>
-       </table>
+           </thead>
+           <tbody>
+             {orders.map((item, index) => (
+               <tr key={index}>
+                 <td>{item.id}</td>
+                 <td>{item.created_at}</td>
+                 <td>
+                   {String(item?.order_detais?.payForm).toLocaleLowerCase()}
+                 </td>
+                 <td>
+                   {Number(item?.order_detais?.total_Pay).toLocaleString("pt")}
+                   kz
+                 </td>
+                 <td>{item?.order_detais?.totalPoduct}</td>
+                 <td>
+                   {item.status == 3 ? (
+                     <p
+                       style={{
+                         backgroundColor: "var(--green)",
+                       }}
+                     >
+                       Concluído
+                     </p>
+                   ) : item.status == 1 ? (
+                     <p
+                       style={{
+                         backgroundColor: "var(--yellow)",
+                       }}
+                     >
+                       Em Produção
+                     </p>
+                   ) : item.status == 2 ? (
+                     <p
+                       style={{
+                         backgroundColor: "var(--blue)",
+                       }}
+                     >
+                       Á entrega
+                     </p>
+                   ) : (
+                     <p>Cancelado</p>
+                   )}
+                 </td>
+               </tr>
+             ))}
+           </tbody>
+         </table>
+       </>
      )}
    </section>
  );

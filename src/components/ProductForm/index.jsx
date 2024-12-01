@@ -46,11 +46,11 @@ async function CreatePost(e) {
   }
 }
  return (
-   <section id="productForm">
+   <section id="FormProduct">
      {Array.isArray(category) && category?.length > 0 ? (
        <form onSubmit={CreatePost}>
          <span id="profile">
-           <img src={file && URL.createObjectURL(file)} />
+           { file && <img src={file && URL.createObjectURL(file)} />}
            <h1>Foto</h1>
            <input
              type="file"
@@ -122,7 +122,9 @@ async function CreatePost(e) {
          </div>
        </form>
      ) : (
-       <h1 style={{color : 'var(--pink)' , fontSize : '22pt'}}>Nenhuma Categoria Cadastrada</h1>
+       <h1 style={{ color: "var(--pink)", fontSize: "22pt" }}>
+         Nenhuma Categoria Cadastrada
+       </h1>
      )}
    </section>
  );

@@ -35,7 +35,7 @@ export default function Acount() {
         <Loader />
       ) : (
         <>
-          <h1>Meus Dados</h1>
+          <h1>Minha Conta</h1>
             <form onSubmit={async(e) => {
               e.preventDefault()
               if (!name || !city || !qoute || !cep || !email || !password || password?.length < 8) {
@@ -51,7 +51,8 @@ export default function Acount() {
                   email: email,
                   name: name,
                   password:newPass?.length > 0 ? newPass : password,
-                  oldpassword: password
+                  oldpassword: password,
+                  
                 };
                 const response = await updateAdmin(admin)
                 console.log(response)

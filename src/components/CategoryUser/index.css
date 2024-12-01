@@ -120,3 +120,18 @@
     border: solid 1px;
     background-color: var(--white);
 }
+
+
+@media screen and (max-width : 1024px) and (min-width : 719px){#user >  #categoryUser > article form aside{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 20px;
+}
+
+#categoryUser > article form{
+    width: 80%;
+    height: 40%;
+}
+}
+

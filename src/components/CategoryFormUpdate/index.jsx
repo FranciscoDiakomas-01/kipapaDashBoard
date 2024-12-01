@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import { toast } from 'react-toastify';
 import { getById  ,  update} from '../../services/CategoryProduct';
-import './index.css'
 import { useState , useEffect } from 'react';
 export default function CategoryFormUpdate({ close , reload }) {
   const [name , setName] = useState("")
@@ -40,32 +39,36 @@ export default function CategoryFormUpdate({ close , reload }) {
     
   }
  return (
-   <section id="productForm">
-     <form encType="multipart/form-data" method="post" onSubmit={UpdateCategory}>
-         <article>
-           <div>
-             <label htmlFor="name">Nome</label>
-             <input
-               id="name"
-               value={name}
-               placeholder="Entre com o nome"
-               onChange={(e) => {
-                 setName(e.target.value);
-               }}
-             />
-           </div>
-           <div>
-             <label htmlFor="description">Descrição</label>
-             <input
-               value={description}
-               id="description"
-               placeholder="Entre com a descrição"
-               onChange={(e) => {
-                 setDescription(e.target.value);
-               }}
-             />
-           </div>
-         </article>
+   <section id="FormCategory">
+     <form
+       encType="multipart/form-data"
+       method="post"
+       onSubmit={UpdateCategory}
+     >
+       <article>
+         <div>
+           <label htmlFor="name">Nome</label>
+           <input
+             id="name"
+             value={name}
+             placeholder="Entre com o nome"
+             onChange={(e) => {
+               setName(e.target.value);
+             }}
+           />
+         </div>
+         <div>
+           <label htmlFor="description">Descrição</label>
+           <input
+             value={description}
+             id="description"
+             placeholder="Entre com a descrição"
+             onChange={(e) => {
+               setDescription(e.target.value);
+             }}
+           />
+         </div>
+       </article>
 
        <div>
          <button type="submit">Actualizar</button>

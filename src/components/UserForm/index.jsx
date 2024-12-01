@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import './index.css'
 import { createUser } from '../../services/User';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -43,7 +42,7 @@ export default function UserForm({ close , reload , category}) {
 
   }
  return (
-   <section id="productForm">
+   <section id="FormProduct">
      <form onSubmit={create}>
        <article>
          <div>

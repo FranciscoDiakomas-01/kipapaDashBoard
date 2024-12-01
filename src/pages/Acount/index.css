@@ -50,3 +50,25 @@
     background-color: var(--pink);
     color: var(--white);
  }
+
+
+
+ 
+@media screen and (max-width : 1024px) and (min-width : 719px){
+
+#acount form{
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+#acount form input{
+    height: 50px;
+    padding-left: 25px;
+}
+#acount form div svg{
+    bottom: 17px;
+    font-size: 13pt;
+}
+
+}
+
+

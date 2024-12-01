@@ -33,7 +33,7 @@ export default function CategoryForm({ close , reload }) {
     
   }
  return (
-   <section id="productForm">
+   <section id="FormCategory">
      <form encType="multipart/form-data" method="post" onSubmit={CreatePost}>
        <span>
          <img

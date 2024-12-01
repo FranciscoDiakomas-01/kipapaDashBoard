@@ -111,9 +111,8 @@
 }
 
 #product >  article  div aside img{
-    height: 100px;
+    height: 130px;
     width: 100px;
-    border-radius: 50%;
 }
 
 #product >  article  div aside figure{
@@ -127,7 +126,7 @@
     border-radius: 5px;
     padding: 5px;
     animation: surgir2 1s linear;
-    height: 250px;
+    height: 310px;
 }
 
 #product >  article  div aside figure div{
@@ -142,4 +141,31 @@
     width: 150px;
     background-color: var(--pink);
     color: var(--white);
+}
+
+
+
+
+@media screen and (max-width : 1024px) and (min-width : 719px){
+#product >  article  div aside {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    overflow: scroll;
+    padding: 5px ;
+    padding-top: 80px;
+    height: 100%;
+    overflow-x:hidden ;
+}
+
+#product >  article  div aside figure{
+    height: 310px;
+    
+}
+
+#product >  article  div aside img{
+    height: 130px;
+    width: 100px;
+}
 }

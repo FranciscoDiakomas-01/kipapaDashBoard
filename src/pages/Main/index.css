@@ -9,6 +9,7 @@
 #dash > * {
     padding: 20px;
 }
+
 #dash > h1{
     color: var(--pink);
     font-size: 14pt;
@@ -46,6 +47,8 @@
 #dash * {
     overflow: hidden;
 }
+
+
 @keyframes surgir2 {
     
     from{
@@ -89,3 +92,36 @@
     font-size: 32pt;
 }
 
+
+@media screen and (max-width : 1024px) and (min-width : 719px){
+#dash > article{
+    padding-top: 100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    
+}
+#dash > article aside{
+    width: 100%;
+}
+#dash  table{
+    display: none;
+}
+
+#dash > article aside{
+    height: 180px;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    position: relative;
+    background-color: var(--pink);
+    color: var(--white);
+    text-align: center;
+}
+#dash > h1{
+    display: none;
+}
+}

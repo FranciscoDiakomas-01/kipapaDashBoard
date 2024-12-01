@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import './index.css'
-import { FaSearch } from 'react-icons/fa';
+import { FaCircle, FaSearch } from 'react-icons/fa';
 import Loader from '../../components/Loader';
 import ProductForm from '../../components/ProductForm';
 import ProductDetails from '../../components/ProductDetails';
@@ -63,8 +63,10 @@ export default function Product() {
   }
  return (
    <section id="product">
-     {isAdd && <ProductForm close={setIsAdd} reload={setReload} category={category} />}
-     {isDetails && <ProductDetails close={setDetails}  reload={setReload}/>}
+     {isAdd && (
+       <ProductForm close={setIsAdd} reload={setReload} category={category} />
+     )}
+     {isDetails && <ProductDetails close={setDetails} reload={setReload} />}
      <span>
        <h1>Produtos</h1>
        <button
@@ -110,6 +112,10 @@ export default function Product() {
                      <figure key={index}>
                        <img src={item.img_url} />
                        <strong>{item.name}</strong>
+                       <strong>
+                         <FaCircle />
+                         <i>{item?.title}</i>
+                       </strong>
                        <div>
                          <p>
                            {Number(item?.current_price).toLocaleString("pt")}kz
@@ -123,7 +129,7 @@ export default function Product() {
                        </div>
                        <button
                          onClick={() => {
-                           sessionStorage.setItem("pid" , item?.id);
+                           sessionStorage.setItem("pid", item?.id);
                            setDetails(true);
                          }}
                        >

@@ -1,4 +1,4 @@
-#productForm{
+#FormProduct{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -9,9 +9,8 @@
     align-items: center;
     justify-content: center;
 }
-
-#productForm > form{
-    width: 70%;
+#FormProduct > form{
+    width: 90%;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -22,32 +21,32 @@
     box-shadow: 2px 2px 3px #0000003b;
     justify-content: center;
 }
-#productForm figure > form{
+#FormProduct figure > form{
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 40px;
     align-items: center;
     justify-content: center;
-
 }
 
-#productForm form article{
+#FormProduct form article{
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;
     gap: 30px 20px;
 }
-#productForm form article div{
+#FormProduct form article div{
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-#productForm form article div input , #productForm form article div select{
+#FormProduct form article div input , #FormProduct form article div select{
     width: 100%;
+    height: 40px;
 }
 
-#productForm form > div:last-of-type{
+#FormProduct form > div:last-of-type{
     width: 100%;
     display: flex;
     align-items: center;
@@ -55,24 +54,24 @@
     gap: 40px;
 }
 
-#productForm form > div:last-of-type button{
+#FormProduct form > div:last-of-type button{
     width: 100%;
     color: var(--white);
     background-color: var(--pink);
 }
 
-#productForm form > div:last-of-type button:last-of-type{
+#FormProduct form > div:last-of-type button:last-of-type{
     width: 100%;
     color: var(--white);
     background-color: var(--blue);
 }
 
-#productForm form  label{
+#FormProduct form  label{
     color: var(--pink);
 }
 
 
-#productForm form  > span{
+#FormProduct form  > span{
     font-size: 22pt;
     color: var(--blue);
     display: flex;
@@ -81,15 +80,34 @@
     height: 200px;
     width: 200px;
     justify-content: center;
-    border: dotted red ;
+    border: dotted var(--blue) ;
     border-radius: 50%;
     cursor: pointer;
     overflow: hidden;
 }
-#productForm form > span input{
+#FormProduct form > span input{
     height: 100%;
     width: 100%;
     position: absolute;
     opacity: 0;
     cursor: pointer;
+    z-index: 9;
+}
+
+
+#FormProduct form  img{
+    position: absolute;
+    width: 150px;
+    height: 150px;    
+    z-index: 3;
+}
+
+
+
+@media screen and (max-width : 1024px) and (min-width : 719px){
+#FormProduct > form{
+    width: 85%;
+}#FormProduct form article{
+    grid-template-columns: 1fr;
+}
 }
