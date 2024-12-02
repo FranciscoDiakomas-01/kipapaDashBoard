@@ -49,6 +49,10 @@ export default function Login() {
            <img src={logo} />
            <h1>kipapa</h1>
          </div>
+         <h1 style={{
+           textAlign: 'center',
+           color: 'var(--pink)'
+         }}>ADMIN</h1>
          <label>Email</label>
          <input
            placeholder="exemplo@kipapa.com"

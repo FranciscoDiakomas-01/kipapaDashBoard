@@ -168,6 +168,11 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
+}
+
+#orders > aside >article div p{
+    width: 95px;
 }
 
 #orders > aside > div{
@@ -180,9 +185,8 @@
 
 
 #orders > aside > div figure img{
-    height: 50px;
+    height: 70px;
     width: 50px;
-    border-radius: 50%;
 }
 #orders > aside > div figure span{
     display: flex;

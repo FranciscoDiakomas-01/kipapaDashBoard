@@ -58,21 +58,25 @@ export default function ProductDetails({ close ,reload }) {
     }
   }
  return (
-   <section id="productForm">
+   <section id="ProductDetails">
      <figure>
        <div>
-         <button onClick={async() => {
-           const response = await deleteProductById()
-           if (response) {
-              toast.success("Deletado com sucesso!")
-              reload(prev => !prev)
-              setTimeout(()=>{close(prev => false)},500)
-              return 
-          }else {
-            toast.error("Erro ao Deletar!");
-            return;
-          }
-         }}>
+         <button
+           onClick={async () => {
+             const response = await deleteProductById();
+             if (response) {
+               toast.success("Deletado com sucesso!");
+               reload((prev) => !prev);
+               setTimeout(() => {
+                 close((prev) => false);
+               }, 500);
+               return;
+             } else {
+               toast.error("Erro ao Deletar!");
+               return;
+             }
+           }}
+         >
            <FaRegTrashCan />
          </button>
        </div>

@@ -251,24 +251,30 @@ export default function Orders() {
            </div>
            <article>
              <div>
-               <p>Cliente : </p>
-               <i>{client?.name + " " + client?.lastname}</i>
-             </div>
-
-             <div>
-               <p>Email :</p>
-               <i>{client?.email}</i>
-             </div>
-
-             <div>
-               <p>Endereço : </p>
+               <p>Cliente: </p>
                <i>
+                 {client?.name + " " + client?.lastname} / {client?.email}
+               </i>
+             </div>
+             <div>
+               <p>Email: </p>
+               <i>
+                  {client?.email}
+               </i>
+             </div>
+             <div>
+               <p>Endereço:</p>
+               <i
+                 style={{
+                   wordBreak: "break-all",
+                 }}
+               >
                  {String(
                    orderDetails?.adress.city +
                      " / " +
                      orderDetails?.adress.qoute +
                      " / " +
-                     orderDetails?.adress.cep
+                     orderDetails?.adress.cep?.trim()
                  ).toLocaleLowerCase()}
                </i>
              </div>
@@ -298,31 +304,31 @@ export default function Orders() {
              <div>
                {orderDetails?.status != 3 && (
                  <div>
-                     <button
-                       onClick={() => {
-                         setUserOrder(() => true);
-                       }}
-                     >
-                       Adicionar Entregador
-                     </button>
+                   <button
+                     onClick={() => {
+                       setUserOrder(() => true);
+                     }}
+                   >
+                     Adicionar Entregador
+                   </button>
 
-                     <button
-                       onClick={async () => {
-                         const response = await UpdateOrderStatus(
-                           orderDetails?.id,
-                           3
-                         );
-                         if (response) {
-                           toast.success("Alterado com Sucesso!");
-                           return setReload((prev) => !prev);
-                         } else {
-                           toast.error("Erro ao Alterar!");
-                           return;
-                         }
-                       }}
-                     >
-                       Finalizar Pedido
-                     </button>
+                   <button
+                     onClick={async () => {
+                       const response = await UpdateOrderStatus(
+                         orderDetails?.id,
+                         3
+                       );
+                       if (response) {
+                         toast.success("Alterado com Sucesso!");
+                         return setReload((prev) => !prev);
+                       } else {
+                         toast.error("Erro ao Alterar!");
+                         return;
+                       }
+                     }}
+                   >
+                     Finalizar Pedido
+                   </button>
                  </div>
                )}
              </div>

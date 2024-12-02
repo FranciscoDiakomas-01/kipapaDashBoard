@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import './index.css'
 import generateColor from '../../services/generateColor';
@@ -9,6 +10,10 @@ import CategoryUser from "../../components/CategoryUser";
 import { getAllUsers, getAllUserrByCategory, deleteUserById} from '../../services/User';
 import { getAllUsercategory } from '../../services/CategoryUSer';
 import { toast } from 'react-toastify';
+import { getAdminData } from "../../services/getAdminData";
+import { useNavigate } from "react-router-dom";
+
+
 export default function User() {
   const [isloading, setIsLoading] = useState(true);
   const [isAdding, setisAdding] = useState(false);
@@ -21,7 +26,25 @@ export default function User() {
     lastPage: 0,
     currentPage: 0,
   });
+  
+  
   const [isCategory, setIsCategory] = useState(false);
+  const nav = useNavigate();
+  const [show, setShow] = useState(false);
+
+  //verificar se é admin
+  useEffect(() => {
+    async function isAdmin() {
+      const response = await getAdminData();
+      if (!response) {
+        nav("/login");
+        return;
+      } else {
+        setShow(true);
+      }
+    }
+    isAdmin();
+  }, []);
   useEffect(() => {
 
     async function get() {
@@ -54,185 +77,207 @@ export default function User() {
   }, [page , reload , filter]);
  return (
    <section id="user">
-     {isAdding && <UserForm close={setisAdding} category={category} reload={setReload}  />}
+     {show && (
+       <>
+         {isAdding && (
+           <UserForm
+             close={setisAdding}
+             category={category}
+             reload={setReload}
+           />
+         )}
 
-     <>
-       {isCategory ? (
-         <CategoryUser close={setIsCategory} reloadOnReturn={setReload}/>
-       ) : (
          <>
-           <div>
-             <h1>Funcionários</h1>
-             <div>
-               <button
-                 onClick={() => {
-                   setIsCategory(true);
-                 }}
-               >
-                 Categoria
-               </button>
-               <button
-                 onClick={() => {
-                   setisAdding(true);
-                 }}
-               >
-                 + Usuário
-               </button>
-             </div>
-           </div>
-           <form>
-             <select
-               onChange={(e) => {
-                 setFilter((prev) => e.target.value);
-               }}
-             >
-               <option value={"all"}>Filtar por categoria</option>
-               <option value={"all"}>Todas categorias</option>
-               {Array.isArray(category) &&
-                 category?.map((c) => (
-                   <option key={c?.id} value={c?.id}>
-                     {c?.title}
-                   </option>
-                 ))}
-             </select>
-             <button>
-               <FaSearch />
-             </button>
-           </form>
-           {Array.isArray(users) && users?.length > 0 ? (
+           {isCategory ? (
+             <CategoryUser close={setIsCategory} reloadOnReturn={setReload} />
+           ) : (
              <>
-               {isloading ? (
+               <div>
+                 <h1>Funcionários</h1>
                  <div>
-                   <Loader />
+                   <button
+                     onClick={() => {
+                       setIsCategory(true);
+                     }}
+                   >
+                     Categoria
+                   </button>
+                   <button
+                     onClick={() => {
+                       setisAdding(true);
+                     }}
+                   >
+                     + Usuário
+                   </button>
                  </div>
-               ) : (
+               </div>
+               <form>
+                 <select
+                   onChange={(e) => {
+                     setFilter((prev) => e.target.value);
+                   }}
+                 >
+                   <option value={"all"}>Filtar por categoria</option>
+                   <option value={"all"}>Todas categorias</option>
+                   {Array.isArray(category) &&
+                     category?.map((c) => (
+                       <option key={c?.id} value={c?.id}>
+                         {c?.title}
+                       </option>
+                     ))}
+                 </select>
+                 <button>
+                   <FaSearch />
+                 </button>
+               </form>
+               {Array.isArray(users) && users?.length > 0 ? (
                  <>
-                   <article>
-                     {users.map((item, index) => (
-                       <figure
-                         key={index}
-                         id="fig"
-                         onMouseLeave={() => {
-                           const figs =
-                             document.querySelectorAll("#fig")[index];
-                           const btn = figs
-                             .getElementsByClassName("div")[0]
-                             .getElementsByTagName("button")[0];
-
-                           if (btn.textContent == "Menos detalhes") {
-                             btn.click();
-                           }
-                         }}
-                       >
-                         <article>
-                           <div>
-                             <span
-                               style={{
-                                 backgroundColor: generateColor(),
-                               }}
-                             >
-                               {item?.name?.at(0) + item?.lastname?.at(0)}
-                             </span>
-                             <strong>
-                               {item?.name + " " + item?.lastname}
-                             </strong>
-                             <i>{item.email}</i>
-                           </div>
-                           <aside>
-                             <strong>
-                               Salário :{" "}
-                               {Number(item?.salary).toLocaleString("pt")}kz{" "}
-                             </strong>
-                             <strong>Categoria : {item?.category} </strong>
-                             <strong>Município : {item?.adress?.city} </strong>
-                             <strong>Bairro : {item?.adress?.qoute} </strong>
-                             <strong>Cep : {item?.adress?.cep} </strong>
-                           </aside>
-                         </article>
-                         <div className="div">
-                           <button
-                             onClick={() => {
+                   {isloading ? (
+                     <div>
+                       <Loader />
+                     </div>
+                   ) : (
+                     <>
+                       <article>
+                         {users.map((item, index) => (
+                           <figure
+                             key={index}
+                             id="fig"
+                             onMouseLeave={() => {
                                const figs =
                                  document.querySelectorAll("#fig")[index];
                                const btn = figs
                                  .getElementsByClassName("div")[0]
                                  .getElementsByTagName("button")[0];
 
-                               if (btn.textContent == "Mais detalhes") {
-                                 btn.textContent = "Menos detalhes";
-                               } else {
-                                 btn.textContent = "Mais detalhes";
+                               if (btn.textContent == "Menos detalhes") {
+                                 btn.click();
                                }
-                               const article =
-                                 figs.getElementsByTagName("article")[0];
-                               article.classList.toggle("apaer");
                              }}
                            >
-                             Mais detalhes
+                             <article>
+                               <div>
+                                 <span
+                                   style={{
+                                     backgroundColor: generateColor(),
+                                   }}
+                                 >
+                                   {item?.name?.at(0) + item?.lastname?.at(0)}
+                                 </span>
+                                 <strong>
+                                   {item?.name + " " + item?.lastname}
+                                 </strong>
+                                 <i>{item.email}</i>
+                               </div>
+                               <aside>
+                                 <strong>
+                                   Salário :{" "}
+                                   {Number(item?.salary).toLocaleString("pt")}kz{" "}
+                                 </strong>
+                                 <strong>Categoria : {item?.category} </strong>
+                                 <strong>
+                                   Município : {item?.adress?.city}{" "}
+                                 </strong>
+                                 <strong>
+                                   Bairro : {item?.adress?.qoute}{" "}
+                                 </strong>
+                                 <strong>Cep : {item?.adress?.cep} </strong>
+                               </aside>
+                             </article>
+                             <div className="div">
+                               <button
+                                 onClick={() => {
+                                   const figs =
+                                     document.querySelectorAll("#fig")[index];
+                                   const btn = figs
+                                     .getElementsByClassName("div")[0]
+                                     .getElementsByTagName("button")[0];
+
+                                   if (btn.textContent == "Mais detalhes") {
+                                     btn.textContent = "Menos detalhes";
+                                   } else {
+                                     btn.textContent = "Mais detalhes";
+                                   }
+                                   const article =
+                                     figs.getElementsByTagName("article")[0];
+                                   article.classList.toggle("apaer");
+                                 }}
+                               >
+                                 Mais detalhes
+                               </button>
+                               <button
+                                 onClick={async () => {
+                                   await deleteUserById(item?.id);
+                                   setReload((prev) => !prev);
+                                   toast.success("Deletado com sucesso!");
+                                   return;
+                                 }}
+                               >
+                                 Eliminar
+                               </button>
+                             </div>
+                           </figure>
+                         ))}
+                       </article>
+                       <span>
+                         <p>
+                           {pagination.currentPage} de{" "}
+                           {pagination.lastPage == 0
+                             ? pagination.lastPage + 1
+                             : pagination.lastPage}
+                         </p>
+                         <div>
+                           <button
+                             onClick={() => {
+                               if (page <= 1) {
+                                 return;
+                               } else {
+                                 setPage((prev) => prev - 1);
+                                 setReload((prev) => !prev);
+                                 return;
+                               }
+                             }}
+                           >
+                             Prev
                            </button>
-                           <button onClick={async () => {
-                             await deleteUserById(item?.id)
-                             setReload(prev => !prev)
-                             toast.success("Deletado com sucesso!")
-                             return
-                           }}>Eliminar</button>
+                           <button
+                             onClick={() => {
+                               if (
+                                 pagination?.lastPage == page ||
+                                 pagination?.lastPage == 0
+                               ) {
+                                 return;
+                               } else {
+                                 setPage((prev) => prev + 1);
+                                 setReload((prev) => !prev);
+                                 return;
+                               }
+                             }}
+                           >
+                             Next
+                           </button>
                          </div>
-                       </figure>
-                     ))}
-                   </article>
-                   <span>
-                     <p>
-                       {pagination.currentPage} de{" "}
-                       {pagination.lastPage == 0
-                         ? pagination.lastPage + 1
-                         : pagination.lastPage}
-                     </p>
-                     <div>
-                       <button
-                         onClick={() => {
-                           if (page <= 1) {
-                             return;
-                           } else {
-                             setPage((prev) => prev - 1);
-                             setReload((prev) => !prev);
-                             return;
-                           }
-                         }}
-                       >
-                         Prev
-                       </button>
-                       <button
-                         onClick={() => {
-                           if (
-                             pagination?.lastPage == page ||
-                             pagination?.lastPage == 0
-                           ) {
-                             return;
-                           } else {
-                             setPage((prev) => prev + 1);
-                             setReload((prev) => !prev);
-                             return;
-                           }
-                         }}
-                       >
-                         Next
-                       </button>
-                     </div>
-                   </span>
+                       </span>
+                     </>
+                   )}
                  </>
+               ) : (
+                 <h1
+                   style={{
+                     textAlign: "center",
+                     color: "var(--pink)",
+                     fontSize: "22pt",
+                     marginTop: "100px",
+                   }}
+                 >
+                   Nehum Funcionário cadatrado
+                 </h1>
                )}
              </>
-           ) : (
-                 <h1 style={{
-                   textAlign: 'center',
-                   color: 'var(--pink)',
-                   fontSize: '22pt',
-                   marginTop : '100px'
-             }}>Nehum Funcionário cadatrado</h1>
            )}
          </>
-       )}
-     </>
+       </>
+     )}
    </section>
  );
 }
