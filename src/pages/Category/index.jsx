@@ -97,45 +97,6 @@ export default function Category() {
                       </figure>
                     ))}
                   </aside>
-                  <span>
-                    <p>
-                      {pagination.currentPage} de{" "}
-                      {pagination.lastPage == 0
-                        ? pagination.lastPage + 1
-                        : pagination.lastPage}
-                    </p>
-                    <div>
-                      <button
-                        onClick={() => {
-                          if (page <= 1) {
-                            return;
-                          } else {
-                            setPage((prev) => prev - 1);
-                            setReload((prev) => !prev);
-                            return;
-                          }
-                        }}
-                      >
-                        Prev
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (
-                            pagination?.lastPage == page ||
-                            pagination?.lastPage == 0
-                          ) {
-                            return;
-                          } else {
-                            setPage((prev) => prev + 1);
-                            setReload((prev) => !prev);
-                            return;
-                          }
-                        }}
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </span>
                 </>
               )}
             </>
@@ -143,6 +104,42 @@ export default function Category() {
             <h1>Nenhuma Categoria Cadastrada</h1>
           )}
         </div>
+        <span>
+          <p>
+            {pagination.currentPage} de{" "}
+            {pagination.lastPage == 0
+              ? pagination.lastPage + 1
+              : pagination.lastPage}
+          </p>
+          <div>
+            <button
+              onClick={() => {
+                if (page <= 1) {
+                  return;
+                } else {
+                  setPage((prev) => prev - 1);
+                  setReload((prev) => !prev);
+                  return;
+                }
+              }}
+            >
+              Prev
+            </button>
+            <button
+              onClick={() => {
+                if (pagination?.lastPage == page || pagination?.lastPage == 0) {
+                  return;
+                } else {
+                  setPage((prev) => prev + 1);
+                  setReload((prev) => !prev);
+                  return;
+                }
+              }}
+            >
+              Next
+            </button>
+          </div>
+        </span>
       </article>
     </section>
   );

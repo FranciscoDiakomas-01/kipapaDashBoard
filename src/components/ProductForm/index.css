@@ -111,3 +111,13 @@
     grid-template-columns: 1fr;
 }
 }
+
+
+
+@media screen and (max-width : 720px){
+#FormProduct > form{
+    width: 90%;
+}#FormProduct form article{
+    grid-template-columns: 1fr;
+}
+}

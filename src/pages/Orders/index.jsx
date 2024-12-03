@@ -226,7 +226,8 @@ export default function Orders() {
                      {" "}
                      <select
                        onChange={async (e) => {
-                         //update order status
+                           //update order status
+                       setActiveRow(0);
                          if (e.target.value == 0) {
                            return;
                          }
@@ -339,6 +340,8 @@ export default function Orders() {
 
                        <button
                          onClick={async () => {
+                          
+                            setActiveRow(0);
                            const response = await UpdateOrderStatus(
                              orderDetails?.id,
                              3

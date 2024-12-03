@@ -105,44 +105,54 @@ export default function Product() {
              {isloading ? (
                <Loader />
              ) : (
-                 
-                 <>
-               <aside>
-                 {Array.isArray(product) &&
-                   Array.isArray(category) &&
-                   category?.length > 0 &&
-                   product.map((item, index) => (
-                     <figure key={index}>
-                       <img src={item.img_url} />
-                       <strong>{item.name}</strong>
-                       <strong>
-                         <FaCircle />
-                         <i>{item?.title}</i>
-                       </strong>
-                       <div>
-                         <p>
-                           {Number(item?.current_price).toLocaleString("pt")}kz
-                         </p>
-                         {item.old_price != 0 && (
-                           <del>
-                             {Number(item?.old_price).toLocaleString("pt") +
-                               "kz"}
-                           </del>
-                         )}
-                       </div>
-                       <button
-                         onClick={() => {
-                           sessionStorage.setItem("pid", item?.id);
-                           setDetails(true);
-                         }}
-                       >
-                         Detalhes
-                       </button>
-                     </figure>
-                   ))}
+               <>
+                 <aside>
+                   {Array.isArray(product) &&
+                     Array.isArray(category) &&
+                     category?.length > 0 &&
+                     product.map((item, index) => (
+                       <figure key={index}>
+                         <img src={item.img_url} />
+                         <strong>{item.name}</strong>
+                         <strong>
+                           <FaCircle />
+                           <i>{item?.title}</i>
+                         </strong>
+                         <div>
+                           <p>
+                             {Number(item?.current_price).toLocaleString("pt")}
+                             kz
+                           </p>
+                           {item.old_price != 0 && (
+                             <del>
+                               {Number(item?.old_price).toLocaleString("pt") +
+                                 "kz"}
+                             </del>
+                           )}
+                         </div>
+                         <button
+                           onClick={() => {
+                             sessionStorage.setItem("pid", item?.id);
+                             setDetails(true);
+                           }}
+                         >
+                           Detalhes
+                         </button>
+                       </figure>
+                     ))}
                  </aside>
-                 
-                 <span>
+               </>
+             )}
+           </>
+         ) : (
+           <h1>
+             {category?.length == 0
+               ? "Nenhuma categoria Cadastrada"
+               : "Nenhum Produto Cadastrado"}
+           </h1>
+         )}
+       </div>
+       <span>
          <p>
            {pagination.currentPage} de{" "}
            {pagination.lastPage == 0
@@ -178,18 +188,6 @@ export default function Product() {
            </button>
          </div>
        </span>
-                 </>
-             )}
-           </>
-         ) : (
-           <h1>
-             {category?.length == 0
-               ? "Nenhuma categoria Cadastrada"
-               : "Nenhum Produto Cadastrado"}
-           </h1>
-         )}
-       </div>
-       
      </article>
    </section>
  );
