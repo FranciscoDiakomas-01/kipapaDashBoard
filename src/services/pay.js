@@ -1,7 +1,7 @@
 export async function getPayFormById(id) {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/payform?id=${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/payform?id=${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -20,7 +20,7 @@ export async function getPayFormById(id) {
 export async function getAllPayForm() {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/payform`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/payform`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -42,7 +42,7 @@ export async function deletePayForm(id) {
     if (isNaN(id)) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/payform/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/payform/${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -66,7 +66,7 @@ export async function createPayForm(pay) {
     if (!pay) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/payform`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/payform`, {
       headers: {
         authorization: token,
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export async function updatePayForm(pay, id) {
     if (!pay || !id) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/payform/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/payform/${id}`, {
       headers: {
         authorization: token,
         "Content-Type": "application/json",

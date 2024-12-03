@@ -21,6 +21,7 @@ export default function Product() {
     currentPage: 0,
   });
   useEffect(() => {
+    setIsLoading(prev => true)
     async function get() {
       const response1 = await getAll(1, 0);
       setCategory(response1?.data);
@@ -46,8 +47,8 @@ export default function Product() {
     }
     get()
     setTimeout(() => {
-      setIsLoading(false)
-    }, 1500)
+      setIsLoading(false);
+    }, 2000);
   }, [page, reload , filter])
   
   async function getByCategory(e) {
@@ -104,6 +105,8 @@ export default function Product() {
              {isloading ? (
                <Loader />
              ) : (
+                 
+                 <>
                <aside>
                  {Array.isArray(product) &&
                    Array.isArray(category) &&
@@ -137,18 +140,9 @@ export default function Product() {
                        </button>
                      </figure>
                    ))}
-               </aside>
-             )}
-           </>
-         ) : (
-           <h1>
-             {category?.length == 0
-               ? "Nenhuma categoria Cadastrada"
-               : "Nenhum Produto Cadastrado"}
-           </h1>
-         )}
-       </div>
-       <span>
+                 </aside>
+                 
+                 <span>
          <p>
            {pagination.currentPage} de{" "}
            {pagination.lastPage == 0
@@ -184,6 +178,18 @@ export default function Product() {
            </button>
          </div>
        </span>
+                 </>
+             )}
+           </>
+         ) : (
+           <h1>
+             {category?.length == 0
+               ? "Nenhuma categoria Cadastrada"
+               : "Nenhum Produto Cadastrado"}
+           </h1>
+         )}
+       </div>
+       
      </article>
    </section>
  );

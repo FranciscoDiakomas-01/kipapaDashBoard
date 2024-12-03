@@ -104,10 +104,10 @@
 
 
 
-@media screen and (max-width : 1024px) and (min-width : 719px){
+@media screen and (max-width : 1024px){
 #FormCategory form article{
     grid-template-columns: 1fr;
 }#FormCategory > form{
-    width: 80%;
+    width: 85%;
 }
 }

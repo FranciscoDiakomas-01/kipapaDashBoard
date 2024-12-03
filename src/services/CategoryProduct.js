@@ -2,7 +2,7 @@ export async function getById(id) {
   const token = localStorage.getItem("token");
   try {
     const API = await fetch(
-      `http://localhost:8080/foodcategorys?id=${id}`,
+      `https://kipapa-backend.onrender.com/foodcategorys?id=${id}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -23,12 +23,15 @@ export async function getById(id) {
 export async function getAll(page = 1, limit = 10) {
   const token = localStorage.getItem("token");
     try {
-      const API = await fetch(`http://localhost:8080/foodcategorys?page=${page}&limit=${limit}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "authorization" : token
-        },
-      });
+      const API = await fetch(
+        `https://kipapa-backend.onrender.com/foodcategorys?page=${page}&limit=${limit}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+        }
+      );
       const response = await API.json();
       if (response?.data?.length > 0) {
         return response;
@@ -45,13 +48,16 @@ const token = localStorage.getItem("token");
       if (isNaN(id)) {
         return false;
       }
-      const API = await fetch(`http://localhost:8080/foodcategory/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-        method : 'DELETE'
-      });
+      const API = await fetch(
+        `https://kipapa-backend.onrender.com/foodcategory/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+          method: "DELETE",
+        }
+      );
       const response = await API.json();
         if (response?.data == "not found") {
           return false;
@@ -69,14 +75,19 @@ export async function create(category) {
     if (!category) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/foodcategory`, {
-      headers: {
-        authorization: token,
-      },
-      method: "POST",
-      body : category
-    });
+    const API = await fetch(
+      `https://kipapa-backend.onrender.com/foodcategory`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token
+        },
+        method: "POST",
+        body: JSON.stringify(category),
+      }
+    );
     const response = await API.json();
+      console.log(response);
     if (response?.data == "created") {
       return true;
     } else {
@@ -94,14 +105,17 @@ export async function update(category) {
       return false;
     }
     const id = sessionStorage.getItem("cid");
-    const API = await fetch(`http://localhost:8080/foodcategory/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: token,
-      },
-      method: "PUT",
-      body: JSON.stringify(category),
-    });
+    const API = await fetch(
+      `https://kipapa-backend.onrender.com/foodcategory/${id}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+        method: "PUT",
+        body: JSON.stringify(category),
+      }
+    );
     const response = await API.json();
     if (response?.data == "updated") {
       return true

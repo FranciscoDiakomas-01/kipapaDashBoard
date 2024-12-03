@@ -78,11 +78,13 @@
     color: var(--white);
 }
 #orders > article{
-    width: 75%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 10px;
+    position: relative;
+    overflow: hidden;
 }
 
 #orders > article > div:first-of-type{
@@ -123,11 +125,12 @@
 }
 
 #orders > aside{
-    width: 30%;
+    width: 40%;
     display: flex;
     background-color: var(--white);
     flex-direction: column;
     height: 100%;
+    position: relative;
 } 
 
 #orders > aside > * {
@@ -231,7 +234,7 @@
 
 
 
-@media screen and (max-width : 1024px) and (min-width : 719px){
+@media screen and (max-width : 1024px){
     
    #orders{
         width: 100%;
@@ -251,18 +254,13 @@
         height: 50%;
     }
     #orders > article > div:first-of-type{
-        height: 50px;
+        height: 70px;
+        width: 100%;
     }
     #orders > article > span{
         width: 100%;
         overflow: hidden;
     }
-    #orders > article > span button{
-        width: 80px;
-        background-color: var(--pink);
-        color: var(--white);
-    }
-
     #orders > article > span div{
         display: flex;
         gap: 20px;
@@ -273,6 +271,7 @@
     display: flex;
     background-color: var(--white);
     flex-direction: column;
+    height: 50%;
 } 
 
 #orders > aside > div{
@@ -329,3 +328,13 @@
 
 }
 
+@media screen and (max-width : 720px){
+    #orders > aside > div{
+    height: 70%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+}

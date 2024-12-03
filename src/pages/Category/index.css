@@ -158,3 +158,27 @@
     overflow-x:hidden ;
 }
 }
+
+
+@media screen and (max-width : 720px){
+    
+#category{       
+    padding: 10px;
+    padding-top: 10px;
+}
+#category >  article  div aside {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px 30px;
+    overflow: scroll;
+    padding: 10px ;
+    height: 100%;
+    overflow-x:hidden ;
+}
+
+#category > *{
+    padding: 0px;
+}
+
+}

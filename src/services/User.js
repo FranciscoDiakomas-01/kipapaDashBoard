@@ -1,7 +1,7 @@
 export async function getById(id) {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/foodcategorys?id=${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/foodcategorys?id=${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -21,7 +21,7 @@ export async function getAllUsers(page = 1, limit = 10) {
   const token = localStorage.getItem("token");
   try {
     const API = await fetch(
-      `http://localhost:8080/users?page=${page}&limit=${limit}`,
+      `https://kipapa-backend.onrender.com/users?page=${page}&limit=${limit}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export async function deleteUserById(id) {
     if (isNaN(id)) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/user/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/user/${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -69,7 +69,7 @@ export async function createUser(user) {
     if (!user) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/user`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/user`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -96,7 +96,7 @@ export async function update(category) {
       return false;
     }
     const id = sessionStorage.getItem("cid");
-    const API = await fetch(`http://localhost:8080/foodcategory/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/foodcategory/${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -120,7 +120,7 @@ export async function update(category) {
 export async function getAllUserrByCategory( id) {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/userdisponilbe/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/userdisponilbe/${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,

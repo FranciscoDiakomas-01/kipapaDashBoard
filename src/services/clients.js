@@ -2,7 +2,7 @@ export async function getAllClient(page = 1, limit = 10) {
   const token = localStorage.getItem("token");
   try {
     const API = await fetch(
-      `http://localhost:8080/clients?page=${page}&limit=${limit}`,
+      `https://kipapa-backend.onrender.com/clients?page=${page}&limit=${limit}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export async function deleteClientById(id) {
     if (isNaN(id)) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/client/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/client/${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -52,7 +52,7 @@ export async function getClientById(id) {
     if (isNaN(id)) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/client/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/client/${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,

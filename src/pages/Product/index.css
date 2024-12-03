@@ -169,3 +169,31 @@
     width: 100px;
 }
 }
+
+@media screen and (max-width : 720px){
+#product >  article  div aside {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    overflow: scroll;
+    padding: 5px ;
+    padding-top: 80px;
+    height: 100%;
+    overflow-x:hidden ;
+}
+
+#product >  article  div aside figure{
+    height: 310px;
+    
+}
+
+#product >  article  div aside img{
+    height: 130px;
+    width: 100px;
+}
+}
+
+
+
+

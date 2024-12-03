@@ -22,92 +22,105 @@ export default function Clients() {
           lastPage: response?.laspage,
         }));
     }
-    get()
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 2000);
+
+    const interval = setInterval(() => {
+    get();
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, [page , reload]);
  return (
    <section id="user">
      <div>
        <h1>Clientes</h1>
      </div>
-       <>
-         {isloading ? (
-           <div>
-             <Loader />
-           </div>
-         ) : (
-           <>
-             {Array.isArray(client) && client?.length > 0 ? (
-               <>
-                 <article>
-                   {client?.map((item, index) => (
-                     <figure key={index}>
-                       <span
-                         style={{
-                           backgroundColor: "var(--pink)",
-                         }}
-                       >
-                         {item?.name?.at(0) + item?.lastname?.at(0)}
-                       </span>
-                       <strong>{item?.name + " " + item?.lastname}</strong>
-                       <i>{item.email}</i>
-                       <button onClick={async() => {
-                         await deleteClientById(item?.id)
-                         toast.success("Deletado com sucesso!")
-                         setReload(prev => !prev)
-                       }}>Eliminar</button>
-                     </figure>
-                   ))}
-                 </article>
-               </>
-             ) : (
-               <h1
-                 style={{
-                   color: "var(--pink)",
-                   fontSize: "22pt",
-                   textAlign: "center",
-                   marginTop: "100px1q",
-                 }}
-               >
-                 Nenhum cliente Cadastrado
-               </h1>
-             )}
-           </>
-         )}
-       </>
-     <span>
-       <p>
-         {pagination.currentPage} de {pagination.lastPage}
-       </p>
-       <div>
-         <button
-           onClick={() => {
-             if (page <= 1) {
-               return;
-             } else {
-               setPage((prev) => prev - 1);
-               return;
-             }
-           }}
-         >
-           Prev
-         </button>
-         <button
-           onClick={() => {
-             if (pagination?.lastPage == page || pagination?.lastPage == 0) {
-               return;
-             } else {
-               setPage((prev) => prev + 1);
-               return;
-             }
-           }}
-         >
-           Next
-         </button>
-       </div>
-     </span>
+     <>
+       {isloading ? (
+         <div>
+           <Loader />
+         </div>
+       ) : (
+         <>
+           {Array.isArray(client) && client?.length > 0 ? (
+             <>
+               <article>
+                 {client?.map((item, index) => (
+                   <figure key={index}>
+                     <span
+                       style={{
+                         backgroundColor: "var(--pink)",
+                       }}
+                     >
+                       {item?.name?.slice(0, 3)}
+                     </span>
+                     <strong>{item?.name + " " + item?.lastname}</strong>
+                     <i>{item.email}</i>
+                     <button
+                       onClick={async () => {
+                         await deleteClientById(item?.id);
+                         toast.success("Deletado com sucesso!");
+                         setReload((prev) => !prev);
+                       }}
+                     >
+                       Eliminar
+                     </button>
+                   </figure>
+                 ))}
+               </article>
+               <span>
+                 <p>
+                   {pagination.currentPage} de {pagination.lastPage}
+                 </p>
+                 <div>
+                   <button
+                     onClick={() => {
+                       if (page <= 1) {
+                         return;
+                       } else {
+                         setPage((prev) => prev - 1);
+                         return;
+                       }
+                     }}
+                   >
+                     Prev
+                   </button>
+                   <button
+                     onClick={() => {
+                       if (
+                         pagination?.lastPage == page ||
+                         pagination?.lastPage == 0
+                       ) {
+                         return;
+                       } else {
+                         setPage((prev) => prev + 1);
+                         return;
+                       }
+                     }}
+                   >
+                     Next
+                   </button>
+                 </div>
+               </span>
+             </>
+           ) : (
+             <h1
+               style={{
+                 color: "var(--pink)",
+                 fontSize: "22pt",
+                 textAlign: "center",
+                 marginTop: "100px1q",
+               }}
+             >
+               Nenhum cliente Cadastrado
+             </h1>
+           )}
+         </>
+       )}
+     </>
    </section>
  );
 }

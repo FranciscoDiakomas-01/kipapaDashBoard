@@ -27,7 +27,7 @@ export default function Acount() {
      get();
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 2000);
   }, [reload]);
   return (
     <section id="acount">

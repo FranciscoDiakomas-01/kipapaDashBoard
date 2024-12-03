@@ -1,7 +1,7 @@
 export async function getAdminData() {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/admin`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/admin`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -21,7 +21,7 @@ export async function getAdminData() {
 export async function getDashBoard() {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/dashBoard`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/dashBoard`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -44,7 +44,7 @@ export async function updateAdmin(admin) {
     if (!admin) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/admin`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/admin`, {
       headers: {
         authorization: token,
         "Content-Type": "application/json",

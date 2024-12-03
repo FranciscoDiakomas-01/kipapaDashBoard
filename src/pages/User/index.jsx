@@ -73,7 +73,7 @@ export default function User() {
     get()
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 2000);
   }, [page , reload , filter]);
  return (
    <section id="user">

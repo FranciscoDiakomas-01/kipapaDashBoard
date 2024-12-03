@@ -22,14 +22,15 @@ export default function ProductForm({ close, reload, category }) {
 async function CreatePost(e) {
   e.preventDefault();
   if (file && name?.length > 0 && description?.length > 0 && !isNaN(price) && !isNaN(categoryId)) {
-    const formdata = new FormData();
-    formdata.append("file", file);
-    formdata.append("name", name);
-    formdata.append("description", description);
-    formdata.append("price", price);
-    formdata.append("categoryId", categoryId);
-    formdata.append("olprice", 0);
-    const response = await createProduct(formdata);
+    const body = {
+      name: name,
+      file: file,
+      price: price,
+      olprice: 0,
+      categoryId: categoryId,
+      description: description,
+    };
+    const response = await createProduct(body);
     if (response) {
       toast.success("Criado com sucesso!");
       close(false);
@@ -49,16 +50,6 @@ async function CreatePost(e) {
    <section id="FormProduct">
      {Array.isArray(category) && category?.length > 0 ? (
        <form onSubmit={CreatePost}>
-         <span id="profile">
-           { file && <img src={file && URL.createObjectURL(file)} />}
-           <h1>Foto</h1>
-           <input
-             type="file"
-             onChange={(e) => {
-               setFile(e.target.files[0]);
-             }}
-           />
-         </span>
          <article>
            <div>
              <label htmlFor="name">Nome</label>
@@ -105,6 +96,16 @@ async function CreatePost(e) {
                placeholder="Entre com a descrição"
                onChange={(e) => {
                  setDescription(e.target.value);
+               }}
+             />
+           </div>
+           <div>
+             <label htmlFor="name">Link da Imagem</label>
+             <input
+               id="name"
+               placeholder="Entre com o nome"
+               onChange={(e) => {
+                 setFile(e.target.value);
                }}
              />
            </div>

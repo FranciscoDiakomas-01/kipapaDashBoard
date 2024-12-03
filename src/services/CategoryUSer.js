@@ -1,12 +1,15 @@
 export async function getByIdCategoryUserById(id) {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/categoryUser?id=${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: token,
-      },
-    });
+    const API = await fetch(
+      `https://kipapa-backend.onrender.com/categoryUser?id=${id}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      }
+    );
     const response = await API.json();
     if (Array.isArray(response?.data)) {
       return response?.data[0];
@@ -20,12 +23,15 @@ export async function getByIdCategoryUserById(id) {
 export async function getAllUsercategory() {
   const token = localStorage.getItem("token");
     try {
-      const API = await fetch(`http://localhost:8080/categoryUser`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-      });
+      const API = await fetch(
+        `https://kipapa-backend.onrender.com/categoryUser`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+        }
+      );
       const response = await API.json();
       if (response?.data?.length > 0) {
         return response;
@@ -42,13 +48,16 @@ const token = localStorage.getItem("token");
       if (isNaN(id)) {
         return false;
       }
-      const API = await fetch(`http://localhost:8080/departament/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-        method: "DELETE",
-      });
+      const API = await fetch(
+        `https://kipapa-backend.onrender.com/departament/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+          method: "DELETE",
+        }
+      );
       const response = await API.json();
         if (response?.data == "not found") {
           return false;
@@ -66,14 +75,17 @@ export async function createCategoryUser(categoryuser) {
     if (!categoryuser) {
       return false;
     }
-    const API = await fetch(`http://localhost:8080/categoryUser`, {
-      headers: {
-        authorization: token,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(categoryuser),
-    });
+    const API = await fetch(
+      `https://kipapa-backend.onrender.com/categoryUser`,
+      {
+        headers: {
+          authorization: token,
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(categoryuser),
+      }
+    );
     const response = await API.json();
     if (response?.data == "created") {
       return true;
@@ -92,14 +104,17 @@ export async function updateCategoryUser(category) {
       return false;
     }
     const id = sessionStorage.getItem("ucid");
-    const API = await fetch(`http://localhost:8080/departament/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: token,
-      },
-      method: "PUT",
-      body: JSON.stringify(category),
-    });
+    const API = await fetch(
+      `https://kipapa-backend.onrender.com/departament/${id}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+        method: "PUT",
+        body: JSON.stringify(category),
+      }
+    );
     const response = await API.json();
     if (response?.data == "updated") {
       return true

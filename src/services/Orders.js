@@ -2,7 +2,7 @@ export async function getAllOrders(page=1 , limit=10 , status = 1) {
     const token = localStorage.getItem("token");
     try {
       const API = await fetch(
-        `http://localhost:8080/ordersbystatus/${status}?page=${page}&limit=${limit}`,
+        `https://kipapa-backend.onrender.com/ordersbystatus/${status}?page=${page}&limit=${limit}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export async function getAllOrders(page=1 , limit=10 , status = 1) {
 export async function getOrderByID(id) {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/ordersbyclient/${id}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/ordersbyclient/${id}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -45,7 +45,7 @@ export async function getOrderByID(id) {
 export async function UpdateOrderStatus(id , status = 1) {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/order/${id}/${status}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/order/${id}/${status}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -66,7 +66,7 @@ export async function UpdateOrderStatus(id , status = 1) {
 export async function UpdateOrderDelivery(id, userId) {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/orderUser/${id}/${userId}`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/orderUser/${id}/${userId}`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,
@@ -88,7 +88,7 @@ export async function UpdateOrderDelivery(id, userId) {
 export async function getLatestOrders() {
   const token = localStorage.getItem("token");
   try {
-    const API = await fetch(`http://localhost:8080/order`, {
+    const API = await fetch(`https://kipapa-backend.onrender.com/order`, {
       headers: {
         "Content-Type": "application/json",
         authorization: token,

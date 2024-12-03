@@ -11,11 +11,13 @@ export default function CategoryForm({ close , reload }) {
   async function CreatePost(e) {
     e.preventDefault()
     if (file && name?.length > 0 && description?.length > 0) {
-      const formdata = new FormData()
-      formdata.append("file", file)
-      formdata.append("title", name);
-      formdata.append("desription", description);
-      const response = await create(formdata)
+      
+      const body = {
+        title: name,
+        file: file,
+        desription: description,
+      };
+      const response = await create(body);
       if (response) {
         toast.success("Criado com sucesso!")
         close(false)
@@ -35,18 +37,6 @@ export default function CategoryForm({ close , reload }) {
  return (
    <section id="FormCategory">
      <form encType="multipart/form-data" method="post" onSubmit={CreatePost}>
-       <span>
-         <img
-           src={file && URL.createObjectURL(file)}
-         />
-         <h1>Foto</h1>
-         <input
-           type="file"
-           onChange={(e) => {
-             setFile(e.target.files[0]);
-           }}
-         />
-       </span>
        <article>
          <div>
            <label htmlFor="name">Nome</label>
@@ -65,6 +55,16 @@ export default function CategoryForm({ close , reload }) {
              placeholder="Entre com a descrição"
              onChange={(e) => {
                setDescription(e.target.value);
+             }}
+           />
+         </div>
+         <div>
+           <label htmlFor="name">Link da Imagem</label>
+           <input
+             id="name"
+             placeholder="Entre com o nome"
+             onChange={(e) => {
+               setFile(e.target.value);
              }}
            />
          </div>

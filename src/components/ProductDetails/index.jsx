@@ -60,78 +60,80 @@ export default function ProductDetails({ close ,reload }) {
  return (
    <section id="ProductDetails">
      <figure>
-       <div>
-         <button
-           onClick={async () => {
-             const response = await deleteProductById();
-             if (response) {
-               toast.success("Deletado com sucesso!");
-               reload((prev) => !prev);
-               setTimeout(() => {
-                 close((prev) => false);
-               }, 500);
-               return;
-             } else {
-               toast.error("Erro ao Deletar!");
-               return;
-             }
-           }}
-         >
-           <FaRegTrashCan />
-         </button>
-       </div>
        {isLoading ? (
          <Loader />
        ) : (
-         <form onSubmit={Update}>
-           <article>
-             <div>
-               <label htmlFor="name">Nome</label>
-               <input
-                 id="name"
-                 value={name}
-                 placeholder="Entre com o nome"
-                 onChange={(e) => {
-                   setName((prev) => e.target.value);
-                 }}
-               />
-             </div>
-             <div>
-               <label htmlFor="price">Preço</label>
-               <input
-                 value={price}
-                 id="price"
-                 placeholder="Entre com o preço"
-                 type="number"
-                 onChange={(e) => {
-                   setPrice((prev) => e.target.value);
-                 }}
-               />
-             </div>
-             <div>
-               <label htmlFor="description">Descrição</label>
-               <input
-                 value={description}
-                 id="description"
-                 placeholder="Entre com a descrição"
-                 onChange={(e) => {
-                   setDescription((prev) => e.target.value);
-                 }}
-               />
-             </div>
-           </article>
+         <>
            <div>
-             <button type="submit">Actualizar</button>
              <button
-               type="button"
-               onClick={() => {
-                 close(false);
+               onClick={async () => {
+                 const response = await deleteProductById();
+                 if (response) {
+                   toast.success("Deletado com sucesso!");
+                   reload((prev) => !prev);
+                   setTimeout(() => {
+                     close((prev) => false);
+                   }, 500);
+                   return;
+                 } else {
+                   toast.error("Erro ao Deletar!");
+                   return;
+                 }
                }}
              >
-               Fechar
+               <FaRegTrashCan />
              </button>
            </div>
-         </form>
+           <form onSubmit={Update}>
+             <article>
+               <div>
+                 <label htmlFor="name">Nome</label>
+                 <input
+                   id="name"
+                   value={name}
+                   placeholder="Entre com o nome"
+                   onChange={(e) => {
+                     setName((prev) => e.target.value);
+                   }}
+                 />
+               </div>
+               <div>
+                 <label htmlFor="price">Preço</label>
+                 <input
+                   value={price}
+                   id="price"
+                   placeholder="Entre com o preço"
+                   type="number"
+                   onChange={(e) => {
+                     setPrice((prev) => e.target.value);
+                   }}
+                 />
+               </div>
+               <div>
+                 <label htmlFor="description">Descrição</label>
+                 <input
+                   value={description}
+                   id="description"
+                   placeholder="Entre com a descrição"
+                   onChange={(e) => {
+                     setDescription((prev) => e.target.value);
+                   }}
+                 />
+               </div>
+             </article>
+             <div>
+               <button type="submit">Actualizar</button>
+               <button
+                 type="button"
+                 onClick={() => {
+                   close(false);
+                 }}
+               >
+                 Fechar
+               </button>
+             </div>
+           </form>
+         </>
        )}
      </figure>
    </section>

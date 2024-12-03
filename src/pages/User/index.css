@@ -166,3 +166,17 @@
 }
 }
 
+
+@media screen and (max-width : 720px) {#user >  article{
+    width: 100%;
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+#user >  div button{
+    background-color: var(--pink);
+    width: 90px;
+    color: var(--white);
+}
+}

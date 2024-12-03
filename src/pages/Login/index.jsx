@@ -1,6 +1,7 @@
 import './index.css'
 import login from '../../services/login';
 import logo from '../../assets/321097281_1948082938901845_9073110493333833804_n.jpg'
+import Loader from '../../components/Loader'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 export default function Login() {
@@ -9,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [emailValidation , setValidationEmail]= useState(false)
   const [passWordValidation, setPassWordValidation] = useState(false);
+  const[isLoading , setIsloading] = useState(false)
   async function handelOnSubmit(e) {
     e.preventDefault()
     //validation
@@ -20,6 +22,8 @@ export default function Login() {
       setPassWordValidation(true)
       return 
     } else {
+      setIsloading(true)
+
       const userData = {
         email,
         password
@@ -27,16 +31,19 @@ export default function Login() {
       const pResponse = document.getElementById("response")
       const response = await login(userData)
       if (response == false) {
-        pResponse.textContent = "Dados incorrectos!"
-        
+        pResponse.textContent = "Dados incorrectos!"  
         pResponse.style.color = "red";
         return
       } else {
-        pResponse.textContent = "Lodado com sucesso!";
-        pResponse.style.color = 'var(--green)'
         setTimeout(() => {
-          nav("/")
+        setIsloading(false);
+          pResponse.textContent = "Lodado com sucesso!";
+          pResponse.style.color = "var(--green)";
         },2000)
+        
+        setTimeout(() => {
+          nav("/");
+        }, 3000);
         return;
       }
     }
@@ -49,10 +56,14 @@ export default function Login() {
            <img src={logo} />
            <h1>kipapa</h1>
          </div>
-         <h1 style={{
-           textAlign: 'center',
-           color: 'var(--pink)'
-         }}>ADMIN</h1>
+         <h1
+           style={{
+             textAlign: "center",
+             color: "var(--pink)",
+           }}
+         >
+           ADMIN
+         </h1>
          <label>Email</label>
          <input
            placeholder="exemplo@kipapa.com"
@@ -92,9 +103,11 @@ export default function Login() {
            </p>
          )}
          <button type="submit">Entrar</button>
-         <p id='response'></p>
+         <p id="response"></p>
+         {isLoading && <Loader />}
        </div>
      </form>
+
      <article></article>
    </section>
  );
