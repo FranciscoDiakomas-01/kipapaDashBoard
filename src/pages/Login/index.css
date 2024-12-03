@@ -36,7 +36,7 @@
 }
 
 #login #loader{
-    margin-top: 20px;
+    margin-top: 90px;
 }
 #login >  article{
     background-image: linear-gradient(#00000024 , rgba(0, 0, 0, 0.479)) , url(../../assets/bugger.jpg);

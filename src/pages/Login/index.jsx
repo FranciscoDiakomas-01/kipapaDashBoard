@@ -14,7 +14,6 @@ export default function Login() {
   async function handelOnSubmit(e) {
     e.preventDefault()
     //validation
-    console.log({email , password})
     if (email?.length < 5) {
       setValidationEmail(true)
       return
@@ -23,7 +22,6 @@ export default function Login() {
       return 
     } else {
       setIsloading(true)
-
       const userData = {
         email,
         password
@@ -33,6 +31,7 @@ export default function Login() {
       if (response == false) {
         pResponse.textContent = "Dados incorrectos!"  
         pResponse.style.color = "red";
+        setIsloading(false);
         return
       } else {
         setTimeout(() => {
