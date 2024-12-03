@@ -3,21 +3,24 @@ import { getDashBoard } from '../../services/getAdminData';
 import { getLatestOrders} from '../../services/Orders'
 import { useState, useEffect } from 'react';
 import Loader from '../../components/Loader'
+import { Notify } from './../../services/notification.js';
+import { toast } from 'react-toastify';
 export default function Main() {
   const [isloading, setIsLoading] = useState(true);
   const [DashBoard, setDashBoard] = useState([]);
-  const [orders , setOrders] = useState([])
+  const [orders, setOrders] = useState([])
   useEffect(() => {
-    
     async function get() {
       const response = await getDashBoard()
       const response1 = await getLatestOrders();
-      console.log(response1)
+      const notfy = await Notify(response?.data[2]?.total);
+      if (notfy) {
+        toast.info("Novo Pedido")
+      }
       setDashBoard(response?.data)
       setOrders(response1)
     }
     const interval = setInterval(() => { get(); }, 1000)
-    
     setTimeout(async () => {
       setIsLoading(false);
     }, 2000);

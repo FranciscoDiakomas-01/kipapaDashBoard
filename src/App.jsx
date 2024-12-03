@@ -10,7 +10,6 @@ import { FaBowlFood } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { getAdminData } from "./services/getAdminData";
-
 export function App() {
   const nav = useNavigate()
   const [active, setAcrtive] = React.useState(0)
