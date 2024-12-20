@@ -5,7 +5,6 @@ import 'react-toastify/ReactToastify.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Main from './pages/Main/index.jsx';
 import Product from './pages/Product/index.jsx';
-import User from './pages/User/index.jsx';
 import Category from './pages/Category/index.jsx';
 import Clients from './pages/Clients/index.jsx';
 import Orders from './pages/Orders/index.jsx';
@@ -28,10 +27,6 @@ const router = createBrowserRouter([
       {
         path: "/category",
         element: <Category />,
-      },
-      {
-        path: "/users",
-        element: <User />,
       },
       {
         path: "/clients",

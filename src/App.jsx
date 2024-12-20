@@ -57,11 +57,6 @@ export function App() {
       path: "/category",
     },
     {
-      icon: <FaRegUser />,
-      name: "Funcionários",
-      path: "/users",
-    },
-    {
       icon: <FaShoppingCart />,
       name: "Pedidos",
       path: "/orders",
@@ -74,7 +69,9 @@ export function App() {
   ];
   return (
     <main id="app">
-      <ToastContainer></ToastContainer>
+      <ToastContainer style={{
+        zIndex : '999999999999'
+      }}></ToastContainer>
       {show && (
         <>
           <header>

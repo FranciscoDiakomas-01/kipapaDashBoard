@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import Loader from '../../components/Loader';
 import { getAllClient , deleteClientById } from '../../services/clients';
 import { useState, useEffect } from "react";
+import './index.css'
 export default function Clients() {
 
   const [isloading, setIsLoading] = useState(true);
