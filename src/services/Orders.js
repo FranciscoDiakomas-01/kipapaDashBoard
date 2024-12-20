@@ -53,6 +53,7 @@ export async function UpdateOrderStatus(id , status = 1) {
         method : 'PUT'
     });
     const response = await API.json();
+  
     if (response?.data == "updated") {
       return true;
     } else {

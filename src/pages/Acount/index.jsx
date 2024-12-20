@@ -30,7 +30,34 @@ export default function Acount() {
       ) : (
         <>
           <h1>Minha Conta</h1>
-          <form>
+            <form onSubmit={async(e) => {
+              e.preventDefault()
+              if (!name ||  !email || !password || password?.length < 8) {
+                return toast.warn("Preencha todos campos obrigatórios")
+              } else {
+                if (newPass && newPass?.length < 8) {
+                  return toast.warn("8 caracteres no mínimo");
+                }
+                const admin = {
+                  email: email,
+                  name: name,
+                  password:newPass?.length > 0 ? newPass : password,
+                  oldpassword: password,
+                  
+                };
+                const response = await updateAdmin(admin)
+                console.log(response)
+                if (response == "wrong password") {
+                  return toast.warn("Palavra passe Errada")
+                } else if (response) {
+                  setReload(prev => !prev)
+                  location.reload();
+                  return toast.success("Alterado com sucesso");
+                } else {
+                  return toast.error("Dados inválidos");
+                }
+              }
+          }}>
             <div>
               <FaUser />
               <label htmlFor="name">Nome</label>
@@ -84,37 +111,8 @@ export default function Acount() {
               />
             </div>
             <p></p>
+            <button>Atualizar</button>
           </form>
-          <button
-            onClick={async (e) => {
-              e.preventDefault();
-              if (!name || !email || !password || password?.length < 8) {
-                return toast.warn("Preencha todos campos obrigatórios");
-              } else {
-                if (newPass && newPass?.length < 8) {
-                  return toast.warn("8 caracteres no mínimo");
-                }
-                const admin = {
-                  email: email,
-                  name: name,
-                  password: newPass?.length > 0 ? newPass : password,
-                  oldpassword: password,
-                };
-                const response = await updateAdmin(admin);
-                console.log(response);
-                if (response == "wrong password") {
-                  return toast.warn("Palavra passe Errada");
-                } else if (response) {
-                  setReload((prev) => !prev);
-                  return toast.success("Alterado com sucesso");
-                } else {
-                  return toast.error("Dados inválidos");
-                }
-              }
-            }}
-          >
-            Atualizar
-          </button>
         </>
       )}
     </section>

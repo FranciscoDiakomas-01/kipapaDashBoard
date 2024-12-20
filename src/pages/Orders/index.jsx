@@ -9,7 +9,6 @@ export default function Orders() {
   const [tab, setTab] = useState(1)
   const [activeRow, setActiveRow] = useState(0)
   const [page , setPage] = useState(1)
-  const [orderUser, setUserOrder] = useState(false)
   const [isLoading, setLoading] = useState(true);
   const [isLoading1, setLoading1] = useState(false);
   const [Orders, setOrders] = useState([])
@@ -216,7 +215,6 @@ export default function Orders() {
                  <h1>Pedido Nº # {orderDetails?.id} </h1>
                  {orderDetails?.status != 3 && (
                    <>
-                     {" "}
                      <select
                        onChange={async (e) => {
                            //update order status
@@ -312,25 +310,16 @@ export default function Orders() {
                  </div>
 
                  <div>
-                   <p>Forma de Pagamento : </p>
+                   <p>Pagamento : </p>
                    <i>
-                     {" "}
                      {String(
                        orderDetails?.order_detais?.payForm
-                     ).toLocaleLowerCase()}{" "}
+                     )}
                    </i>
                  </div>
                  <div>
                    {orderDetails?.status != 3 && (
                      <div>
-                       <button
-                         onClick={() => {
-                           setUserOrder(() => true);
-                         }}
-                       >
-                         Adicionar Entregador
-                       </button>
-
                        <button
                          onClick={async () => {
                           
