@@ -44,13 +44,7 @@ export default function Main() {
                      ? "Total Produtos"
                      : index == 1
                      ? "Categoria Produtos"
-                     : index == 2
-                     ? "Total Pedidos"
-                     : index == 3
-                     ? "Total Funcionários"
-                     : index == 4
-                     ? "Total Clientes"
-                     : "Categoria Funcionários"}
+                     : index == 2}
                  </h1>
                  <span>{item?.total}</span>
                </aside>
