@@ -8,10 +8,7 @@ import { toast } from "react-toastify";
 export default function Acount() {
   const [isLoading, setIsLoading] = useState(true);
   const [name, setName] = useState("");
-  const [cep, setCep] = useState("");
-  const [qoute, setQuoute] = useState("");
   const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
   const [password, setPasword] = useState("");
   const [newPass, setNewPass] = useState("");
   const [reload , setReload] = useState(false)
@@ -20,9 +17,6 @@ export default function Acount() {
        const response = await getAdminData();
        setName(prev => response?.name)
        setEmail(prev => response?.email)
-       setCity((prev) => response?.adress?.city);
-       setQuoute((prev) => response?.adress?.qoute);
-       setCep((prev) => response?.adress?.cep);
      }
      get();
     setTimeout(() => {
@@ -36,36 +30,7 @@ export default function Acount() {
       ) : (
         <>
           <h1>Minha Conta</h1>
-            <form onSubmit={async(e) => {
-              e.preventDefault()
-              if (!name || !city || !qoute || !cep || !email || !password || password?.length < 8) {
-                return toast.warn("Preencha todos campos obrigatórios")
-              } else {
-                if (newPass && newPass?.length < 8) {
-                  return toast.warn("8 caracteres no mínimo");
-                }
-                const admin = {
-                  city: city,
-                  cep: cep,
-                  qoute: qoute,
-                  email: email,
-                  name: name,
-                  password:newPass?.length > 0 ? newPass : password,
-                  oldpassword: password,
-                  
-                };
-                const response = await updateAdmin(admin)
-                console.log(response)
-                if (response == "wrong password") {
-                  return toast.warn("Palavra passe Errada")
-                } else if (response) {
-                  setReload(prev => !prev)
-                  return toast.success("Alterado com sucesso");
-                } else {
-                  return toast.error("Dados inválidos");
-                }
-              }
-          }}>
+          <form>
             <div>
               <FaUser />
               <label htmlFor="name">Nome</label>
@@ -90,45 +55,6 @@ export default function Acount() {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                }}
-              />
-            </div>
-            <div>
-              <FaUser />
-              <label htmlFor="cep">Cep</label>
-              <input
-                id="cep"
-                placeholder="Entre com o cep"
-                required
-                value={cep}
-                onChange={(e) => {
-                  setCep(e.target.value);
-                }}
-              />
-            </div>
-            <div>
-              <FaLocationArrow />
-              <label htmlFor="city">Cidade</label>
-              <input
-                id="city"
-                placeholder="Entre com a cidade"
-                required
-                value={city}
-                onChange={(e) => {
-                  setCity(e.target.value);
-                }}
-              />
-            </div>
-            <div>
-              <FaLocationArrow />
-              <label htmlFor="qoute">Bairro</label>
-              <input
-                id="qoute"
-                placeholder="Entre com o bairro"
-                required
-                value={qoute}
-                onChange={(e) => {
-                  setQuoute(e.target.value);
                 }}
               />
             </div>
@@ -158,8 +84,37 @@ export default function Acount() {
               />
             </div>
             <p></p>
-            <button>Atualizar</button>
           </form>
+          <button
+            onClick={async (e) => {
+              e.preventDefault();
+              if (!name || !email || !password || password?.length < 8) {
+                return toast.warn("Preencha todos campos obrigatórios");
+              } else {
+                if (newPass && newPass?.length < 8) {
+                  return toast.warn("8 caracteres no mínimo");
+                }
+                const admin = {
+                  email: email,
+                  name: name,
+                  password: newPass?.length > 0 ? newPass : password,
+                  oldpassword: password,
+                };
+                const response = await updateAdmin(admin);
+                console.log(response);
+                if (response == "wrong password") {
+                  return toast.warn("Palavra passe Errada");
+                } else if (response) {
+                  setReload((prev) => !prev);
+                  return toast.success("Alterado com sucesso");
+                } else {
+                  return toast.error("Dados inválidos");
+                }
+              }
+            }}
+          >
+            Atualizar
+          </button>
         </>
       )}
     </section>

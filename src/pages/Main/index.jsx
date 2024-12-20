@@ -18,6 +18,7 @@ export default function Main() {
         toast.info("Novo Pedido")
       }
       setDashBoard(response?.data)
+      console.log(response.data)
       setOrders(response1)
     }
     const interval = setInterval(() => { get(); }, 1000)
@@ -44,7 +45,7 @@ export default function Main() {
                      ? "Total Produtos"
                      : index == 1
                      ? "Categoria Produtos"
-                     : index == 2}
+                     : index == 2 ? "Total Pedidos" : "Total Clientes" }
                  </h1>
                  <span>{item?.total}</span>
                </aside>

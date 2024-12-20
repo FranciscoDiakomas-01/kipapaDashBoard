@@ -1,11 +1,8 @@
 /* eslint-disable no-unused-vars */
 import './inex.css'
 import { useState , useEffect } from 'react';
-import generateColor from './../../services/generateColor';
-import { getAllOrders, getOrderByID, UpdateOrderDelivery, UpdateOrderStatus } from '../../services/Orders';
-import { getClientById } from '../../services/clients'
-import { getAllUsercategory } from '../../services/CategoryUSer'
-import { getAllUserrByCategory } from '../../services/User'
+import { getAllOrders, getOrderByID, UpdateOrderStatus } from '../../services/Orders.js';
+import { getClientById } from '../../services/clients.js'
 import Loader from '../../components/Loader'
 import { toast } from 'react-toastify';
 export default function Orders() {
@@ -18,9 +15,7 @@ export default function Orders() {
   const [Orders, setOrders] = useState([])
   const [client , setClient] = useState([])
   const [orderDetails, setOrderDetails] = useState()
-  const [usersCategory , setUserCategory] = useState()
   const [reload, setReload] = useState(false);
-  const [users , setUsers] = useState([])
   const [pagination, setPagination] = useState({
     lastPage: 0,
     currentPage: 0,
@@ -28,8 +23,6 @@ export default function Orders() {
   useEffect(() => {
     setLoading(prev => true)
     async function getAll() {
-      const response2 = await getAllUsercategory()
-      setUserCategory(prev =>response2?.data )
       const response = await getAllOrders(page, 20 , tab);
       setOrders(response?.data);
       setPagination((prev) => ({
@@ -366,75 +359,6 @@ export default function Orders() {
          </>
        )}
      </aside>
-     {orderUser && (
-       <div>
-         <form>
-           <select
-             onChange={async (e) => {
-               if (e.target.value == 0) {
-                 return;
-               }
-               const response = await getAllUserrByCategory(e.target.value);
-               setUsers(response?.data);
-             }}
-           >
-             <option value={0}>Selecione a categoria</option>
-             {Array.isArray(usersCategory) &&
-               usersCategory?.map((c) => (
-                 <option key={c?.id} value={c?.id}>
-                   {c?.title}
-                 </option>
-               ))}
-           </select>
-
-           <span>
-             {Array.isArray(users) &&
-               users?.length > 0 &&
-               users.map((user) => (
-                 <figure
-                   key={user.id}
-                   onClick={async () => {
-                     //adicionar um entregador
-                     const response = await UpdateOrderDelivery(
-                       orderDetails?.id,
-                       user?.id
-                     );
-                     setReload((prev) => !prev);
-                     if (response) {
-                       //trocar o estado para entrega
-                       await UpdateOrderStatus(orderDetails?.id, 2);
-                       toast.success("Entregador adicionado");
-                       return setTimeout(() => {
-                         setUserOrder((prev) => false);
-                       }, 1500);
-                     } else {
-                       toast.error("Erro ao adicionar");
-                       return;
-                     }
-                   }}
-                 >
-                   <p
-                     style={{
-                       backgroundColor: generateColor(),
-                     }}
-                   >
-                     {user.name?.at(0)}
-                   </p>
-                   <strong>{user.name}</strong>
-                   <i>{user.email}</i>
-                 </figure>
-               ))}
-           </span>
-           <button
-             onClick={() => {
-               setUserOrder(() => false);
-             }}
-           >
-             Fechar
-           </button>
-         </form>
-       </div>
-     )}
    </section>
  );
 }
