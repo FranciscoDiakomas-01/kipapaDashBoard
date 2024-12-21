@@ -10,7 +10,7 @@ import { getAll } from '../../services/CategoryProduct';
 export default function Product() {
   const [isAdd , setIsAdd] = useState(false)
   const [isloading, setIsLoading] = useState(true)
-  const [product , setProduct] = useState([1])
+  const [product , setProduct] = useState([])
   const [isDetails , setDetails] = useState(false)
   const [page, setPage] = useState(1);
   const [reload, setReload] = useState(false);

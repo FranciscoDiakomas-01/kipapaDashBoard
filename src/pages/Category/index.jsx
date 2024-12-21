@@ -17,7 +17,7 @@ export default function Category() {
     lastPage: 0,
     currentPage: 0,
   });
-  const [category, setCategory] = useState([2]);
+  const [category, setCategory] = useState([]);
   useEffect(() => {
     setIsLoading((prev) => true);
     async function getALL() {

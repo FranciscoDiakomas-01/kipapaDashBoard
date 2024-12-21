@@ -8,7 +8,7 @@ export default function Pay() {
 
   const [title, setTile] = useState("");
   const [reload, setReload] = useState(false);
-  const[pay,setPay] = useState([1])
+  const[pay,setPay] = useState([])
   const [isloading, setIsLoading] = useState(true);
   const [add , setAdd] = useState(false)
   const [update, setUpdate] = useState(false);

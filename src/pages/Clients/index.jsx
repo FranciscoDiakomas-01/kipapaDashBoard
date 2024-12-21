@@ -6,7 +6,7 @@ import './index.css'
 export default function Clients() {
 
   const [isloading, setIsLoading] = useState(true);
-  const [client, setClient] = useState([1])
+  const [client, setClient] = useState([])
   const [page, setPage] = useState(1)
   const [reload, setReload] = useState(false);
   const [pagination, setPagination] = useState({
